@@ -1,0 +1,855 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Pino Sensei | Direction Adventure</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@800&display=swap"><style>
+:root{--blue:#0967c9;--dark:#11477f;--line:#c3e5ff}*{box-sizing:border-box}body{margin:0;font-family:'Trebuchet MS',Arial,sans-serif;background:linear-gradient(#79caff,#d5f6ff);color:#173b60}.app{max-width:1700px;margin:auto;padding:12px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}.brand{font-size:clamp(24px,3vw,42px);font-weight:1000;color:#fff;text-shadow:3px 3px #145aa8,-2px -2px #145aa8,2px -2px #145aa8,-2px 2px #145aa8}.brand small{display:block;font-size:13px;text-shadow:none;color:#124c88;letter-spacing:.5px}.unit{background:#fff;border-radius:25px;padding:12px 22px;font-size:clamp(15px,1.5vw,23px);font-weight:bold;box-shadow:0 4px 0 #7cb7e3}.unit b{background:#1376db;color:white;padding:8px 13px;border-radius:20px;margin-right:8px}.topactions{display:flex;gap:7px}.btn{cursor:pointer;border:2px solid #8dd1ff;border-radius:15px;padding:10px 13px;font-weight:900;font-family:inherit;background:linear-gradient(#fff,#d7f2ff);color:#124a82;box-shadow:0 3px 0 #72b4e2}.btn:hover{filter:brightness(1.05);transform:translateY(-1px)}.btn:focus-visible,.tile:focus-visible{outline:3px solid #ffb62c}.main{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:12px}.mapwrap{border:5px solid #1079c6;border-radius:20px;overflow:hidden;background:#91d45b;box-shadow:0 6px 0 #70b5e2;position:relative}.map{position:relative;width:100%;aspect-ratio:1.44;min-height:430px;overflow:hidden;background:repeating-linear-gradient(45deg,#a7e577 0 23px,#a1de72 23px 46px);touch-action:manipulation}.map svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.plot{position:absolute;transform:translate(-50%,-50%);border:0;background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;width:11%;height:15%;border-radius:12px;z-index:2}.plot:hover,.plot:focus-visible{background:#ffffff70;outline:2px dashed #1b88e6}.plot .emoji{font-size:clamp(25px,3.2vw,57px);filter:drop-shadow(2px 4px 1px #406d3a66);line-height:1.1}.plot .tag{font-size:clamp(9px,1.1vw,14px);background:#fff;border-radius:13px;padding:2px 6px;font-weight:bold;box-shadow:0 2px 2px #457c4e80;white-space:nowrap}.plot.empty{border:2px dashed #ffffff66;background:#ffffff12}.plot.empty:after{content:'+';font-size:26px;color:#ffffffaa}.plot.empty:not(:hover){opacity:.35}.character{position:absolute;z-index:5;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;pointer-events:none;transition:none}.character .person{font-size:clamp(28px,3vw,45px);filter:drop-shadow(1px 3px 2px #153c46aa)}.character .person{width:45px;height:55px;display:block;transform:none;transition:none;transform-origin:50% 50%}.character .person svg{width:100%;height:100%;filter:drop-shadow(1px 3px 2px #153c46aa)}.maphint{position:absolute;left:12px;top:12px;background:#fffffff0;border-radius:12px;padding:7px 10px;font-size:12px;font-weight:bold;z-index:7;max-width:60%}.side{border:4px solid #1167b2;border-radius:20px;background:#fff;overflow:hidden;box-shadow:0 6px 0 #70b5e2;display:flex;flex-direction:column}.side h2{background:#086bc7;color:white;margin:0;padding:12px 15px;font-size:23px}.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:10px 8px}.tab{border:0;border-radius:13px;padding:10px 2px;font-weight:bold;color:white;cursor:pointer;background:#8ab8da;font-size:12px}.tab.active{background:#087fe7}.tab:nth-child(2).active{background:#35b44d}.tab:nth-child(3).active{background:#ed8d1b}.tab:nth-child(4).active{background:#8b46d4}.inventory{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;padding:5px 9px 14px;max-height:570px;overflow:auto}.tile{border:2px solid #c9e5ff;border-radius:11px;background:#f8fcff;cursor:pointer;padding:9px 2px;display:flex;flex-direction:column;align-items:center;gap:4px;min-height:86px;font-family:inherit}.tile .e{font-size:35px}.tile span:last-child{font-size:11px;font-weight:bold}.tile.active{border-color:#ff9d00;background:#fff2c7;box-shadow:0 0 0 2px #ffce63}.sidefoot{padding:10px;border-top:2px dashed #a3d7f9;font-size:12px;text-align:center}.bottom{display:grid;grid-template-columns:1fr 1.1fr 1.65fr;gap:12px;margin-top:13px}.panel{border:3px solid #a1d8ff;border-radius:17px;background:#f8fdff;padding:12px;min-height:116px;box-shadow:0 3px 0 #9bc8e8}.panel h3{margin:0 0 9px;font-size:18px}.modes{display:flex;gap:6px;flex-wrap:wrap}.mode{flex:1;min-width:82px;padding:12px 4px}.mode.active{background:linear-gradient(#329aff,#0870d2);color:white}.message{font-size:14px;line-height:1.5}.message strong{color:#0872ce}.controls{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.control{border:0;border-radius:14px;min-height:83px;color:#fff;font-size:clamp(11px,1.1vw,15px);font-weight:900;cursor:pointer;box-shadow:0 5px 0 #3d7096;font-family:inherit}.control .symbol{display:block;font-size:33px;margin-bottom:4px}.straight{background:linear-gradient(#62d954,#209f2d)}.left{background:linear-gradient(#4cb5ff,#0873e1)}.right{background:linear-gradient(#ffba37,#f0780b)}.stop{background:linear-gradient(#ff7474,#dc2929)}.tools{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.tools .btn{font-size:12px;padding:7px 10px}.status{font-size:12px;margin-top:9px;color:#285b80}.footer{margin:15px 4px 0;color:#12518b;font-size:12px}.modalbg{position:fixed;inset:0;background:#001d43a6;z-index:30;display:none;align-items:center;justify-content:center;padding:15px}.modalbg.show{display:flex}.modal{background:#fff;border:5px solid #1680db;border-radius:22px;padding:25px;max-width:460px;width:100%;box-shadow:0 10px 40px #002b5b70}.modal h2{margin-top:0}.modal p{line-height:1.6}.modalactions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#123e6d;color:white;padding:12px 20px;border-radius:20px;z-index:40;display:none;font-weight:bold;max-width:90vw;text-align:center}.toast.show{display:block}@media(max-width:900px){.main{grid-template-columns:1fr}.side{max-height:330px}.inventory{max-height:190px}.bottom{grid-template-columns:1fr 1fr}.bottom .panel:last-child{grid-column:1/-1}.map{min-height:330px}}@media(max-width:540px){.app{padding:6px}.unit{width:100%;text-align:center}.topactions{width:100%;justify-content:space-between}.map{min-height:280px}.bottom{grid-template-columns:1fr}.bottom .panel:last-child{grid-column:auto}.control{min-height:70px}.plot .emoji{font-size:25px}.plot .tag{font-size:8px;padding:1px 3px}.maphint{font-size:10px}}
+
+/* Compact single-screen classroom layout */
+html,body{height:100%;overflow:hidden}
+.app{height:100dvh;max-width:none;display:flex;flex-direction:column;padding:8px 10px;overflow:hidden}
+.top{flex:0 0 auto;flex-wrap:nowrap;margin-bottom:7px;gap:8px;min-height:49px}
+.brand{font-size:clamp(18px,2.2vw,30px);white-space:nowrap}.brand small{font-size:10px}
+.unit{padding:8px 12px;font-size:clamp(12px,1.3vw,18px);white-space:nowrap}.unit b{padding:5px 8px}
+.topactions{flex-wrap:nowrap}.topactions .btn{padding:7px 9px;font-size:12px;white-space:nowrap}
+.main{flex:1 1 auto;min-height:0;grid-template-columns:minmax(0,1fr) clamp(230px,23vw,310px);gap:8px}
+.mapwrap{min-height:0;box-shadow:none}.map{height:100%;min-height:0;aspect-ratio:auto}
+.side{min-height:0;box-shadow:none}.side h2{font-size:19px;padding:8px 11px}
+.tabs{padding:6px;gap:3px}.tab{padding:7px 1px}
+.inventory{flex:1;min-height:0;max-height:none;align-content:start;gap:5px;padding:4px 7px}
+.tile{min-height:65px;padding:5px 2px;gap:2px}.tile .e{font-size:27px}.tile span:last-child{font-size:10px}
+.sidefoot{padding:5px;font-size:10px}
+.bottom{flex:0 0 auto;display:grid;grid-template-columns:minmax(250px,1.2fr) minmax(200px,1fr) minmax(220px,.9fr);gap:8px;margin-top:7px}
+.panel{padding:7px 9px;min-height:0;box-shadow:none}.panel h3{font-size:14px;margin:0 0 5px}
+.mode{min-width:0;padding:7px 3px;font-size:11px}.tools{gap:4px;margin-top:5px}.tools .btn{font-size:10px;padding:4px 6px}
+.message{font-size:12px;line-height:1.3}.status{margin-top:5px;font-size:11px}
+.joystick{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(3,48px);gap:5px;max-width:320px;margin:auto;align-items:stretch}
+.joystick .control{min-height:0;border-radius:12px;box-shadow:0 3px 0 #3d7096;font-size:10px;padding:2px;line-height:1.05}
+.joystick .control .symbol{font-size:23px;margin:0 0 2px}.joystick .straight{grid-column:2;grid-row:1}.joystick .left{grid-column:1;grid-row:2}.joystick .right{grid-column:3;grid-row:2}.joystick .down{grid-column:2;grid-row:3}.down{background:linear-gradient(#ff7474,#dc2929)}.joystick .control{touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}.joystick .control:active{filter:brightness(.86)}
+.footer{flex:0 0 auto;margin:5px 3px 0;font-size:10px}
+@media(max-width:900px){.main{grid-template-columns:minmax(0,1fr) 225px}.side{max-height:none}.inventory{max-height:none}.bottom{grid-template-columns:1fr 1fr 220px}.bottom .panel:last-child{grid-column:auto}.map{min-height:0}.unit{font-size:12px}.brand{font-size:18px}.topactions .btn{font-size:10px;padding:5px}}
+@media(max-width:680px){.top{flex-wrap:wrap}.main{grid-template-columns:minmax(0,1fr) 160px}.side h2{font-size:14px}.tabs{grid-template-columns:repeat(2,1fr)}.inventory{grid-template-columns:repeat(2,1fr)}.tile{min-height:52px}.tile .e{font-size:22px}.bottom{grid-template-columns:1fr 1fr}.bottom .panel:last-child{grid-column:1/-1}.joystick{grid-template-rows:repeat(3,38px)}.joystick .control .symbol{font-size:17px}.sidefoot{display:none}}
+@media(max-height:650px){.app{padding:4px 7px}.top{margin-bottom:4px}.bottom{margin-top:4px}.panel{padding:4px 6px}.joystick{grid-template-rows:repeat(3,38px)}.joystick .control .symbol{font-size:18px}.footer{display:none}.tile{min-height:53px}.tile .e{font-size:23px}.sidefoot{display:none}}
+.startpoint{position:absolute;left:25%;bottom:1%;transform:translateX(-50%);background:#fff3a1;border:2px solid #e69c1e;border-radius:16px;padding:2px 9px;font-size:11px;font-weight:900;z-index:4;pointer-events:none;box-shadow:0 2px 3px #0002}
+
+/* Walking animation (legs/arms move, body bobs). Idle = no animation. */
+.character .person svg{overflow:visible}
+.character .leg,.character .arm{transform-box:fill-box}
+.character .leg{transform-origin:50% 0}
+.character .arm{transform-origin:50% 8%}
+.character.walking .person{animation:pinoBob .5s ease-in-out infinite}
+.character.walking.v .leg-a{animation:pinoLift .5s ease-in-out infinite}
+.character.walking.v .leg-b{animation:pinoLift .5s ease-in-out infinite -.25s}
+.character.walking.v .arm-a{animation:pinoArmFB .5s ease-in-out infinite -.25s}
+.character.walking.v .arm-b{animation:pinoArmFB .5s ease-in-out infinite}
+.character.walking.h .leg-a{animation:pinoStride .5s ease-in-out infinite}
+.character.walking.h .leg-b{animation:pinoStride .5s ease-in-out infinite -.25s}
+.character.walking.h .arm-a{animation:pinoArmSide .5s ease-in-out infinite -.25s}
+.character.walking.h .arm-b{animation:pinoArmSide .5s ease-in-out infinite}
+@keyframes pinoBob{0%,50%,100%{transform:translateY(0)}25%,75%{transform:translateY(-3px)}}
+@keyframes pinoLift{0%,100%{transform:translateY(0) scaleY(1)}50%{transform:translateY(-3px) scaleY(.82)}}
+@keyframes pinoArmFB{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
+@keyframes pinoStride{0%,100%{transform:rotate(28deg)}50%{transform:rotate(-28deg)}}
+@keyframes pinoArmSide{0%,100%{transform:rotate(32deg)}50%{transform:rotate(-32deg)}}
+@media (prefers-reduced-motion:reduce){.character.walking .person,.character.walking .leg,.character.walking .arm{animation:none!important}}
+
+/* V8: compact, balanced map and centered direction pad */
+.main{width:100%;max-width:1440px;margin:0 auto;grid-template-columns:minmax(0,1fr) clamp(230px,23vw,310px)}
+.mapwrap{width:100%;max-width:1080px;justify-self:center}
+.bottom{width:100%;max-width:1440px;margin:7px auto 0;grid-template-columns:minmax(310px,1fr) minmax(330px,1fr);min-height:170px;max-height:195px}
+.bottom .panel{min-width:0}
+.controlpanel{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:3px}
+.controlpanel .joystick{width:min(100%,330px);grid-template-rows:repeat(3,42px)}
+.controlpanel .status{text-align:center;margin:2px 0 0;font-size:11px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:900px){.bottom{grid-template-columns:minmax(0,1fr) minmax(260px,1fr)}.bottom .panel:last-child{grid-column:auto}}
+@media(max-width:680px){.bottom{grid-template-columns:minmax(0,1fr) minmax(175px,1fr);min-height:145px}.controlpanel .joystick{grid-template-rows:repeat(3,35px)}}
+@media(max-height:720px){.bottom{min-height:145px;max-height:160px}.controlpanel .joystick{grid-template-rows:repeat(3,36px)}}
+
+/* V9: generous town blocks, each with nine individual object slots */
+.mapwrap{max-width:1040px;aspect-ratio:1000/700;align-self:center;max-height:100%;width:100%;min-width:0;justify-self:center;}
+.map{width:100%;height:100%;aspect-ratio:1000/700;min-height:0}
+.main{grid-template-columns:minmax(0,1fr) clamp(230px,23vw,310px);align-items:stretch}
+.townblock{position:absolute;z-index:2;transform:translate(-50%,-50%);width:21%;height:27%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:2px;padding:2px;background:#ffffff14;border:1px solid #ffffff65;border-radius:5px}
+.towncell{appearance:none;min-width:0;min-height:0;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0;background:#baf38b45;border:1px dashed #6db95780;border-radius:4px;padding:0 1px;cursor:pointer;color:#173b60;font-family:inherit}
+.towncell:hover,.towncell:focus-visible{background:#ffffff9c;outline:2px solid #1486db;outline-offset:-1px}
+.towncell.empty{background:#e4ffbd16}
+.towncell.empty:hover:after{content:'+';font-weight:900;color:#438e31}
+.cell-emoji{font-size:clamp(13px,1.45vw,24px);line-height:1.1;filter:drop-shadow(1px 1px 1px #4c7d3466)}
+.cell-label{font-size:clamp(6px,.58vw,9px);line-height:1.05;font-weight:800;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis;background:#ffffffd9;border-radius:5px;padding:1px 2px}
+@media(max-width:900px){.cell-emoji{font-size:clamp(10px,1.7vw,19px)}.cell-label{font-size:6px}.townblock{gap:1px;padding:1px}}
+@media(max-width:680px){.mapwrap{width:100%;height:auto;aspect-ratio:1000/700}.cell-label{display:none}}
+
+/* V10: 20 blocks, 4 objects per block; compact centered game controller */
+.townblock{width:15.5%;height:20%;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:2px}
+.cell-emoji{font-size:clamp(16px,1.5vw,27px)}.cell-label{font-size:clamp(7px,.65vw,10px)}
+.bottom{display:flex!important;justify-content:center;align-items:stretch;max-width:1440px;min-height:0;max-height:none}
+.bottom>.panel{width:min(100%,780px);min-height:0;padding:7px 12px;display:flex;flex-direction:column;align-items:center;gap:5px}
+.bottom .modes{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.bottom .mode{font-size:clamp(11px,1.05vw,15px);min-width:0;padding:7px 4px}
+.bottom .tools{order:3;margin-top:3px;justify-content:center}
+.bottom .joystick{order:2;width:min(100%,290px);grid-template-rows:repeat(3,37px);gap:4px}
+.bottom .status{order:4;margin:0;text-align:center}
+.bottom .panel h3{font-size:14px;margin:0}
+.main{min-height:0;grid-template-columns:minmax(0,1fr) clamp(220px,22vw,310px)}
+.mapwrap{aspect-ratio:1000/700}.map{aspect-ratio:1000/700}
+@media(max-width:680px){.bottom>.panel{width:100%}.bottom .mode{font-size:10px}.townblock{gap:1px}.cell-label{display:none}}
+.startpoint{left:20%!important;bottom:2%!important}
+
+/* V11: strict 70% map / 30% sidebar, no controls beneath map */
+html,body{height:100%;overflow:hidden}
+.app{height:100dvh;max-width:none;width:100%;display:flex;flex-direction:column;padding:7px 10px;overflow:hidden}
+.top{flex:0 0 auto;margin-bottom:7px;flex-wrap:nowrap;gap:8px}
+.brand{font-size:clamp(18px,2vw,30px)}.brand small{font-size:10px}
+.unit{font-size:clamp(12px,1.1vw,18px);padding:7px 12px;white-space:nowrap}
+.unit b{padding:5px 8px}.topactions .btn{padding:6px 8px;font-size:11px}
+.main{flex:1 1 0;min-height:0;min-width:0;width:100%;max-width:none;margin:0;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,3fr);gap:9px;align-items:stretch}
+.mapwrap{width:100%;height:100%;min-height:0;aspect-ratio:auto;display:flex;align-items:center;justify-content:center}
+.map{width:100%;height:100%;min-height:0;aspect-ratio:auto}
+.side{min-height:0;max-height:none;height:100%;width:100%;display:flex;flex-direction:column;overflow:hidden}
+.side h2{flex:none;padding:8px 11px;font-size:clamp(14px,1.35vw,20px)}
+.tabs{flex:none;padding:5px 6px;gap:3px}.tab{padding:6px 1px;font-size:clamp(9px,.75vw,12px)}
+.inventory{flex:1 1 0;min-height:50px;max-height:none;overflow-y:auto;align-content:start;padding:4px 6px;gap:4px}
+.tile{min-height:52px;padding:3px 1px;gap:1px}.tile .e{font-size:clamp(18px,2vw,30px)}.tile span:last-child{font-size:clamp(8px,.7vw,11px)}
+.sidefoot{flex:none;padding:3px 6px;font-size:10px}
+.bottom{flex:none!important;width:100%;max-width:none;min-height:0;max-height:none;margin:0;display:block!important;padding:5px 6px 6px;border-top:2px solid #a3d7f9}
+.bottom>.panel{width:100%;min-height:0;max-height:none;padding:0;display:flex;flex-direction:column;align-items:stretch;gap:4px;border:0;box-shadow:none;background:transparent}
+.bottom .panel h3{font-size:12px;margin:0;text-align:center}
+.bottom .modes{width:100%;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px}
+.bottom .mode{min-width:0;font-size:clamp(8px,.7vw,11px);padding:5px 1px;white-space:normal}
+.bottom .tools{order:2;margin:0;display:flex;flex-wrap:wrap;justify-content:center;gap:3px}
+.bottom .tools .btn{font-size:10px;padding:4px 5px;border-radius:8px}
+.bottom .joystick{order:3;width:min(100%,245px);grid-template-rows:repeat(3,33px);gap:3px;margin:0 auto}
+.bottom .joystick .control{font-size:9px}.bottom .joystick .control .symbol{font-size:19px;margin:0}
+.bottom .status{order:4;margin:0;font-size:10px;text-align:center}
+.footer{flex:none;margin:5px 2px 0;font-size:10px}
+@media(max-width:900px){.main{grid-template-columns:minmax(0,7fr) minmax(0,3fr)}.side{max-height:none}.inventory{max-height:none}.bottom{display:block!important}.map{min-height:0}.bottom .panel:last-child{grid-column:auto}}
+@media(max-width:680px){.main{grid-template-columns:minmax(0,7fr) minmax(0,3fr)}.side h2{font-size:12px}.tabs{grid-template-columns:repeat(2,1fr)}.inventory{grid-template-columns:repeat(2,minmax(0,1fr))}.bottom .modes{grid-template-columns:1fr}.bottom .mode{padding:2px}.top{flex-wrap:wrap}.unit{width:auto}.topactions{width:auto}.sidefoot{display:none}}
+@media(max-height:720px){.footer{display:none}.top{margin-bottom:4px}.bottom .joystick{grid-template-rows:repeat(3,27px)}.bottom .tools .btn{font-size:9px;padding:2px 4px}.bottom .panel h3{display:none}}
+
+/* V12: character anchored by its feet, bigger map objects, drag-and-drop */
+.character{transform:translate(-50%,-68%)}
+.townblock{gap:3px;padding:3px}
+.towncell{container-type:size;padding:1px;gap:0;justify-content:center}
+.cell-emoji{font-size:clamp(22px,2.6vw,44px);font-size:min(66cqh,78cqw);line-height:1}
+.cell-label{font-size:clamp(8px,.7vw,11px);font-size:clamp(7px,min(14cqw,15cqh),12px);line-height:1.15;padding:0 3px;margin-top:1px;max-width:100%;position:relative;z-index:1;box-shadow:0 1px 2px #3a6b3a40}
+.maphint{pointer-events:none;animation:hintFade .6s ease 7s forwards}.maphint.again{animation:none}@keyframes hintFade{to{opacity:0;visibility:hidden}}
+.tile{touch-action:pan-y;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;cursor:grab}
+.towncell.drop-target{background:#fff6b8!important;outline:3px solid #ff9d00!important;outline-offset:-2px}
+.drag-ghost{position:fixed;left:0;top:0;z-index:60;pointer-events:none;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;background:#fff;border:3px solid #1486db;border-radius:14px;padding:4px 8px;box-shadow:0 8px 18px #002b5b55;font-weight:900;font-size:11px;color:#124a82;white-space:nowrap}
+.drag-ghost.touch{transform:translate(-50%,-115%)}
+.drag-ghost .e{font-size:38px;line-height:1}
+.drag-ghost.bad{border-color:#e14b4b;opacity:.8}
+body.dragging,body.dragging *{cursor:grabbing!important;user-select:none!important}
+
+/* ================= V13: student profile, city title, characters, welcome ================= */
+[hidden]{display:none!important}
+.hleft{display:flex;align-items:center;gap:10px;min-width:0;flex:0 1 auto}
+.profile{display:flex;flex-direction:column;align-items:center;gap:2px;flex:none}
+.avatarbtn{position:relative;width:40px;height:40px;border-radius:50%;padding:0;border:3px solid #fff;background:#ffe9a8;box-shadow:0 0 0 2px #1376db,0 3px 0 2px #145aa8;cursor:pointer}
+.avatarbtn:hover{transform:scale(1.06)}.avatarbtn:focus-visible,.namebtn:focus-visible{outline:3px solid #ffb62c;outline-offset:2px}
+.avatar{display:block;width:100%;height:100%;border-radius:50%;overflow:hidden}
+.avatar img,.avatar svg,.bigavatar img,.bigavatar svg{width:100%;height:100%;display:block;object-fit:cover}
+.avatarbtn .cam{position:absolute;right:-7px;bottom:-5px;font-size:10px;background:#fff;border-radius:50%;width:17px;height:17px;display:grid;place-items:center;box-shadow:0 1px 2px #0005}
+.namebtn{border:0;background:#fff;border-radius:9px;padding:1px 7px;font-family:inherit;font-weight:900;font-size:11px;line-height:1.25;color:#124a82;max-width:118px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;box-shadow:0 1px 0 #7cb7e3}
+.citytitle{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:0}
+.citytitle h1{margin:0;font-family:'Baloo 2','Arial Rounded MT Bold','Hiragino Maru Gothic ProN','Trebuchet MS',sans-serif;font-weight:800;font-size:clamp(17px,2.05vw,30px);line-height:1;white-space:nowrap;letter-spacing:.3px;text-shadow:2px 0 0 #fff,-2px 0 0 #fff,0 2px 0 #fff,0 -2px 0 #fff,2px 2px 0 #fff,-2px 2px 0 #fff,2px -2px 0 #fff,-2px -2px 0 #fff,0 4px 0 #145aa8}
+.citytitle .w1{color:#ff4f6d}.citytitle .w2{color:#ff9f1a}.citytitle .w3{color:#22b45e}.citytitle .w4{color:#2f6dff}
+.citytitle .emo{text-shadow:none}
+.topactions .charbtn,.charbtn{padding:2px 9px!important;font-size:11px!important;border-radius:10px;box-shadow:0 2px 0 #72b4e2}
+@media(max-width:1180px){.topactions .btn{font-size:10px;padding:5px 6px}.unit{font-size:11px;padding:6px 9px}.unit b{padding:4px 6px}}
+@media(max-width:1000px){.citytitle h1{font-size:16px}.unit b{display:none}}
+/* profile / character / welcome popup */
+.pmodal{max-width:740px;max-height:94vh;overflow:auto;padding:14px 20px 16px}
+.pmodal h2{margin:2px 0 4px;font-size:22px;color:#124a82;text-align:center}
+.psub{margin:0 0 10px;font-size:13px;text-align:center;color:#285b80}
+.steps{display:flex;gap:6px;justify-content:center;margin-bottom:6px}.steps span{width:34px;height:7px;border-radius:4px;background:#cfe6f7}.steps span.on{background:#1376db}
+.pane{margin:4px 0 8px}
+.pane label{display:block;font-weight:900;margin-bottom:4px;color:#124a82}
+.nameinput{width:100%;font-family:inherit;font-weight:900;font-size:22px;padding:9px 14px;border:3px solid #8dd1ff;border-radius:14px;color:#124a82;background:#f8fcff}
+.nameinput:focus{outline:none;border-color:#1376db;box-shadow:0 0 0 3px #ffce63}
+.namerow{display:flex;justify-content:space-between;gap:8px;font-size:11px;color:#4a7194;margin-top:3px}
+.photoarea{display:flex;justify-content:center;margin:4px 0 8px}
+.bigavatar,.camwrap{width:180px;height:180px;border-radius:50%;overflow:hidden;border:5px solid #fff;box-shadow:0 0 0 3px #1376db,0 6px 14px #0003;background:#ffe9a8;position:relative;flex:none}
+.camwrap{background:#123}.camwrap video{width:100%;height:100%;object-fit:cover;display:block}.camwrap video.mirror{transform:scaleX(-1)}
+.photobtns{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;align-items:center}
+.photobtns select{font-family:inherit;font-weight:900;font-size:13px;padding:8px;border-radius:12px;border:2px solid #8dd1ff;color:#124a82;background:#fff}
+.photomsg{min-height:17px;text-align:center;font-size:13px;color:#b5322b;font-weight:bold;margin-top:5px}
+.photomsg.ok{color:#1d7a3a}
+.privacy{font-size:11px;color:#4a7194;text-align:center;margin-top:2px}
+.btn.primary{background:linear-gradient(#329aff,#0870d2);color:#fff;border-color:#0870d2}
+.btn.bigbtn{font-size:17px;padding:10px 20px;background:linear-gradient(#ffd54a,#ff9d00);color:#5a2d00;border-color:#ffb62c;box-shadow:0 4px 0 #c46f00}
+.btn.pulse{animation:pulse 1s ease 3}@keyframes pulse{50%{transform:scale(1.08);box-shadow:0 0 0 5px #ffce63}}
+.charpreview{display:flex;align-items:center;justify-content:center;gap:16px;margin:0 0 8px;background:#eef8ff;border-radius:14px;padding:6px 10px}
+.pchar .person{width:66px;height:80px;display:block}
+.pchar .person svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(1px 3px 2px #153c4666)}
+.pcharinfo{display:flex;flex-direction:column;align-items:flex-start;gap:4px}
+.pcharinfo b{font-size:20px;color:#124a82}
+.minipose{display:flex;gap:6px}.minipose .mp{width:32px;height:39px;background:#fff;border-radius:8px;padding:1px}.minipose svg{width:100%;height:100%}
+.grouplabel{font-weight:900;font-size:13px;margin:5px 0 4px;color:#124a82}
+.chargrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px}
+.charcard{position:relative;border:3px solid #c9e5ff;border-radius:14px;background:#f8fcff;padding:4px 2px 3px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;font-family:inherit;font-weight:900;font-size:12px;color:#124a82}
+.charcard svg{width:44px;height:53px;overflow:visible;margin-top:3px}.minipose svg,.pchar svg{overflow:visible}
+.charcard:hover{background:#eaf6ff}
+.charcard.sel{border-color:#ff9d00;background:#fff2c7;box-shadow:0 0 0 3px #ffce63}
+.charcard.sel:after{content:'✔';position:absolute;top:2px;right:5px;color:#e07800;font-size:13px}
+.pchar .leg,.pchar .arm{transform-box:fill-box}.pchar .leg{transform-origin:50% 0}.pchar .arm{transform-origin:50% 8%}
+.pchar.walking .person{animation:pinoBob .5s ease-in-out infinite}
+.pchar.walking.v .leg-a{animation:pinoLift .5s ease-in-out infinite}.pchar.walking.v .leg-b{animation:pinoLift .5s ease-in-out infinite -.25s}
+.pchar.walking.v .arm-a{animation:pinoArmFB .5s ease-in-out infinite -.25s}.pchar.walking.v .arm-b{animation:pinoArmFB .5s ease-in-out infinite}
+.pchar.walking.h .leg-a{animation:pinoStride .5s ease-in-out infinite}.pchar.walking.h .leg-b{animation:pinoStride .5s ease-in-out infinite -.25s}
+.pchar.walking.h .arm-a{animation:pinoArmSide .5s ease-in-out infinite -.25s}.pchar.walking.h .arm-b{animation:pinoArmSide .5s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.pchar.walking .person,.pchar.walking .leg,.pchar.walking .arm{animation:none!important}}
+@media(max-width:600px){.chargrid{grid-template-columns:repeat(3,minmax(0,1fr))}.bigavatar,.camwrap{width:150px;height:150px}}
+@media(max-height:700px){.bigavatar,.camwrap{width:140px;height:140px}.pmodal h2{font-size:19px}.charcard svg{width:38px;height:46px}}
+
+/* ================= V14: new places, full-block landmarks, proportional map, collapsible panel ================= */
+.tabs{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:680px){.tabs{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.tile{position:relative}
+.tile .e svg{width:1.25em;height:1.25em;display:block}
+.tile span.tname{font-size:clamp(8px,.7vw,11px);font-weight:bold;line-height:1.1;text-align:center}
+.tile span.tja{font-size:clamp(7px,.6vw,9px);color:#4a7194;line-height:1;font-weight:bold}
+.tile span.bigtag{position:absolute;top:2px;right:3px;font-size:8px;font-weight:900;background:#ff9d00;color:#fff;border-radius:6px;padding:1px 4px}
+.cell-emoji:has(svg){display:block}.map .cell-emoji svg,.map .landicon svg{position:static;inset:auto}.cell-emoji svg{width:1.1em;height:1.1em;display:block;margin:0 auto}
+.townblock.landmark{background:#fff8d6;border:2px solid #ffc94a;box-shadow:inset 0 0 0 2px #ffffffa0}
+.townblock.landmark .towncell{background:transparent!important;border-color:transparent!important;outline:none}
+.townblock.landmark:hover{outline:2px solid #1486db}
+.landart{position:absolute;inset:3px 3px 17px;z-index:1;pointer-events:none;display:flex;align-items:center;justify-content:center;container-type:size}
+.landicon{display:block;width:min(100cqw,100cqh);height:min(100cqw,100cqh)}.landicon svg{width:100%;height:100%;display:block;filter:drop-shadow(1px 2px 1px #4c7d3455)}
+.landlabel{position:absolute;left:50%;bottom:2px;transform:translateX(-50%);z-index:2;pointer-events:none;font-weight:900;font-size:clamp(9px,.85vw,13px);line-height:1.2;background:#fff;border:1.5px solid #ffc94a;border-radius:8px;padding:0 7px;color:#173b60;box-shadow:0 1px 2px #3a6b3a50;white-space:nowrap}
+.townblock.drop-block{outline:4px solid #ff9d00!important;outline-offset:1px;background:#fff6b8!important}
+.townblock.drop-block.big .towncell{background:#fff3a0!important}
+.townblock.drop-block.big .towncell.drop-target{outline:none!important}
+.drag-ghost .e svg{width:44px;height:44px;display:block}
+/* the map always keeps its 1000x700 shape and is scaled to fit (never stretched) */
+.mapwrap{max-width:none;container-type:size;position:relative;background:repeating-linear-gradient(45deg,#86cc60 0 23px,#80c75a 23px 46px)}
+.map{flex:none;width:min(100cqw,calc(100cqh * 1000 / 700));height:min(100cqh,calc(100cqw * 700 / 1000));border-radius:10px;box-shadow:0 0 0 2px #ffffffa0,0 4px 14px #0003}
+/* collapsible right panel */
+.main{position:relative;grid-template-columns:minmax(0,1fr) calc((100% - 9px) * .3);transition:grid-template-columns .35s ease,column-gap .35s ease}
+@media(max-width:900px){.main{grid-template-columns:minmax(0,1fr) calc((100% - 9px) * .3)}}
+@media(max-width:680px){.main{grid-template-columns:minmax(0,1fr) calc((100% - 9px) * .3)}}
+.side{transition:opacity .25s ease}
+.app.panel-hidden .main{grid-template-columns:minmax(0,1fr) 0px;column-gap:0}
+.app.panel-hidden .side{opacity:0;visibility:hidden;pointer-events:none;border-width:0;transition:opacity .2s ease,visibility 0s linear .2s}
+.app.panel-hidden .footer{display:none}
+.app.notrans .main,.app.notrans .side,.app.notrans .paneltoggle{transition:none!important}
+.paneltoggle{position:absolute;top:50%;right:calc((100% - 9px) * .3 + 4.5px);transform:translate(50%,-50%);z-index:12;width:26px;height:70px;border:2px solid #fff;border-radius:13px;background:linear-gradient(#329aff,#0870d2);color:#fff;font-size:15px;font-weight:900;cursor:pointer;box-shadow:0 3px 8px #00336680;display:grid;place-items:center;padding:0;transition:right .35s ease,transform .35s ease,border-radius .35s}
+.paneltoggle:hover{filter:brightness(1.1)}.paneltoggle:focus-visible{outline:3px solid #ffb62c;outline-offset:2px}
+.paneltoggle span{display:block;transition:transform .35s ease}
+.app.panel-hidden .paneltoggle{right:-10px;transform:translate(0,-50%);border-radius:13px 0 0 13px;border-right:0;width:30px}
+.app.panel-hidden .paneltoggle span{transform:rotate(180deg)}
+/* floating see-through joystick (only while the panel is hidden) */
+.floatpad{display:none;position:absolute;right:16px;bottom:16px;z-index:9;width:174px;height:174px;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:3px;pointer-events:none;border-radius:50%;background:radial-gradient(circle,#ffffff38 0 45%,#ffffff1c 46% 69%,transparent 70%)}
+.app.panel-hidden .floatpad{display:grid}
+.floatpad .fp{pointer-events:auto;border:2px solid #ffffffc0;border-radius:18px;padding:0;cursor:pointer;display:grid;place-items:center;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent;box-shadow:0 3px 8px #00000030;transition:transform .08s ease,background-color .1s}
+.floatpad .fp svg{width:28px;height:28px;fill:#fff;filter:drop-shadow(0 1px 1px #0007);pointer-events:none}
+.fp.up{grid-column:2;grid-row:1;background:#2fb84a80}.fp.left{grid-column:1;grid-row:2;background:#1c7ed680}.fp.right{grid-column:3;grid-row:2;background:#f0780b80}.fp.down{grid-column:2;grid-row:3;background:#e0313180}
+.fp.left svg{transform:rotate(-90deg)}.fp.right svg{transform:rotate(90deg)}.fp.down svg{transform:rotate(180deg)}
+.fp.pressed{transform:scale(.9)}.fp.up.pressed{background:#2fb84ad0}.fp.left.pressed{background:#1c7ed6d0}.fp.right.pressed{background:#f0780bd0}.fp.down.pressed{background:#e03131d0}
+.floatpad .fpdot{grid-column:2;grid-row:2;margin:16px;border-radius:50%;background:#ffffff40;border:2px solid #ffffff70;pointer-events:none}
+@media(max-height:620px){.floatpad{width:150px;height:150px}.floatpad .fp svg{width:24px;height:24px}}
+@media (prefers-reduced-motion:reduce){.main,.side,.paneltoggle,.paneltoggle span{transition:none!important}}
+</style></head><body><div class="app"><header class="top"><div class="hleft"><div class="profile"><button class="avatarbtn" id="avatarBtn" type="button" aria-label="Change profile picture"><span class="avatar" id="avatar"></span><span class="cam" aria-hidden="true">📷</span></button><button class="namebtn" id="nameBtn" type="button" title="Change nickname"><span id="playerName">Player</span></button></div><div class="citytitle"><h1><span class="emo">🏙️</span> <span class="w1">Welcome</span> <span class="w2">to</span> <span class="w3">My</span> <span class="w4">City!</span></h1><button class="btn charbtn" id="charBtn" type="button">👕 Choose Character</button></div></div><div class="unit"><b>Grade 5 · Unit 6</b> Where is the library?</div><div class="topactions"><button class="btn" id="sound">🔊 Sound On</button><button class="btn" id="lang">EN / 日本語</button><button class="btn" id="help">❔ Help</button><button class="btn" id="full">⛶ Fullscreen</button></div></header><div class="main"><section class="mapwrap"><div class="map" id="map"><svg viewBox="0 0 1000 700" preserveAspectRatio="none" aria-hidden="true"><path d="M200 0V700 M400 0V700 M600 0V700 M800 0V700 M0 175H1000 M0 350H1000 M0 525H1000" stroke="#f6f0da" stroke-width="53" fill="none"/><path d="M200 0V700 M400 0V700 M600 0V700 M800 0V700 M0 175H1000 M0 350H1000 M0 525H1000" stroke="#8899a6" stroke-width="45" fill="none"/><path d="M200 0V700 M400 0V700 M600 0V700 M800 0V700 M0 175H1000 M0 350H1000 M0 525H1000" stroke="#d7e0e7" stroke-width="2" stroke-dasharray="15 18" fill="none"/></svg><div class="maphint" id="hint">🏡 Choose an object, then tap one of the 4 spaces in a block.</div><div class="startpoint" aria-hidden="true">START</div><div class="character v" id="character"><div class="person" id="facing" aria-label="Walking character"></div></div><div id="plots"></div></div><div class="floatpad" id="floatPad"><button class="fp up" type="button" data-dir="up" aria-label="Up"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 L21 15 H15 V21 H9 V15 H3Z"/></svg></button><button class="fp left" type="button" data-dir="left" aria-label="Left"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 L21 15 H15 V21 H9 V15 H3Z"/></svg></button><span class="fpdot" aria-hidden="true"></span><button class="fp right" type="button" data-dir="right" aria-label="Right"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 L21 15 H15 V21 H9 V15 H3Z"/></svg></button><button class="fp down" type="button" data-dir="down" aria-label="Down"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 L21 15 H15 V21 H9 V15 H3Z"/></svg></button></div></section><aside class="side" id="sidePanel"><h2>▦ Map Objects</h2><div class="tabs" id="tabs"></div><div class="inventory" id="inventory"></div><div class="sidefoot">👆 Tap an object, then tap a space — or drag it onto the map.</div><div class="bottom"><section class="panel controlpanel"><h3>🎮 ゲームモード</h3><div class="modes"><button class="btn mode active" data-mode="build">🏡 まちをつくる</button><button class="btn mode" data-mode="mission">🧭 道案内ゲーム</button><button class="btn mode" data-mode="free">🎲 自由にあそぶ</button></div><div class="tools"><button class="btn" id="undo">↶ Undo</button><button class="btn" id="redo">↷ Redo</button><button class="btn" id="erase">🗑 Eraser: Off</button><button class="btn" id="clear">Clear Map</button><button class="btn" id="save">💾 Save</button><button class="btn" id="load">📂 Load</button></div><div class="joystick"><button class="control straight" id="straight" aria-label="Up"><span class="symbol">⬆</span><span>Up</span></button><button class="control left" id="turnleft" aria-label="Left"><span class="symbol">⬅</span><span>Left</span></button><button class="control right" id="turnright" aria-label="Right"><span class="symbol">➡</span><span>Right</span></button><button class="control down" id="down" aria-label="Down"><span class="symbol">⬇</span><span>Down</span></button></div><div class="status" id="status" aria-live="polite">🚶🏻 Facing north · 0 blocks</div><div id="missionTitle" class="sr-only"></div><div id="message" class="sr-only"></div></section></div></aside><button class="paneltoggle" id="panelToggle" type="button" aria-controls="sidePanel" aria-expanded="true" aria-label="Hide the right panel" title="Hide the panel / パネルをかくす"><span aria-hidden="true">▶</span></button></div><div class="footer">Pino Sensei © 2026 · Grade 5 English · Unit 6 · V14 · Works offline after downloading</div></div><div class="modalbg" id="modalbg"><div class="modal"><h2 id="modaltitle">Help</h2><p id="modaltext"></p><div class="modalactions"><button class="btn" id="modalcancel">Cancel</button><button class="btn" id="modalok">OK</button></div></div></div><div class="modalbg" id="pbg"><div class="modal pmodal" role="dialog" aria-modal="true" aria-labelledby="ptitle">
+<div class="steps" id="steps" aria-hidden="true"><span></span><span></span><span></span></div>
+<h2 id="ptitle"></h2><p class="psub" id="psub"></p>
+<section class="pane" id="panePhoto">
+ <div class="photoarea"><div class="bigavatar" id="photoPreview"></div><div class="camwrap" id="camWrap" hidden><video id="camVideo" playsinline muted autoplay></video></div></div>
+ <div class="photobtns" id="photoMain"><button class="btn" id="btnTake" type="button">📷 Take Photo</button><button class="btn" id="btnUpload" type="button">🖼️ Upload Photo</button><button class="btn" id="btnDefault" type="button">🙂 Use Character</button></div>
+ <div class="photobtns" id="camControls" hidden><select id="camSelect" aria-label="Choose camera"><option value="user">🤳 Front camera</option><option value="environment">📷 Back camera</option></select><button class="btn" id="btnCapture" type="button">📸 Capture</button><button class="btn" id="btnRetake" type="button">🔄 Retake</button><button class="btn primary" id="btnPhotoOK" type="button">✅ Confirm</button><button class="btn" id="btnCamCancel" type="button">✖ Cancel</button></div>
+ <div class="photomsg" id="photoMsg" aria-live="polite"></div>
+ <div class="privacy">🔒 Your photo is saved only in this browser. It is never uploaded. / しゃしんはこのブラウザだけに保存されます。</div>
+ <input type="file" id="fileInput" accept="image/*" hidden>
+</section>
+<section class="pane" id="paneName"><label for="nameInput">✏️ Nickname / ニックネーム</label><input id="nameInput" class="nameinput" maxlength="20" autocomplete="off" spellcheck="false" placeholder="Example: Kenta, Hana"><div class="namerow"><span>A nickname is OK. No full name needed. / ニックネームでOK！</span><span id="nameCount">0/20</span></div><div class="photomsg" id="nameMsg" aria-live="polite"></div></section>
+<section class="pane" id="paneChar">
+ <div class="charpreview"><div class="pchar walking v" id="pcharBig"><div class="person"></div></div><div class="pcharinfo"><b id="pcharName"></b><div class="minipose" id="miniPoses"></div></div></div>
+ <div class="grouplabel">👦 Boys / 男の子</div><div class="chargrid" id="gridBoys" role="radiogroup" aria-label="Boy characters"></div>
+ <div class="grouplabel">👧 Girls / 女の子</div><div class="chargrid" id="gridGirls" role="radiogroup" aria-label="Girl characters"></div>
+</section>
+<div class="modalactions" id="pactions"></div>
+</div></div><div class="toast" id="toast"></div><script>
+(()=>{'use strict';const $=id=>document.getElementById(id);
+/* ================= MAP OBJECTS (unchanged) ================= */
+const ITEMS={Places:[['🏫','School'],['🏫','Elementary School'],['🏫','Junior High School'],['📚','Library'],['🏥','Hospital'],['🏪','Store'],['🏣','Post office'],['🚉','Station'],['🏠','House'],['🍽️','Restaurant'],['⛩️','Shrine'],['🛕','Temple'],['⛪','Church'],['🌳','Park'],['🏦','Bank'],['☕','Cafe'],['🏨','Hotel'],['🚒','Fire station'],['🚓','Police station'],['🦁','Zoo'],['🐠','Aquarium'],['🏯','Castle'],['🏟️','Stadium'],['🎡','Amusement Park']],Nature:[['🌸','Cherry tree'],['🌳','Tree'],['🌲','Pine tree'],['🌼','Flowers'],['🌿','Grass'],['🪨','Rock'],['🏞️','Pond'],['🌻','Sunflower'],['🍄','Mushroom'],['🌴','Palm tree']],Animals:[['🐕','Dog'],['🐈','Cat'],['🦊','Fox'],['🐇','Rabbit'],['🐄','Cow'],['🐎','Horse'],['🦝','Raccoon'],['🐸','Frog'],['🐻','Bear'],['🐦','Bird']]};
+// The "Others" tab was removed (V14). Objects from it that are already on saved maps are kept and still shown.
+const LANDMARKS=new Set(['Zoo','Aquarium','Castle','Stadium','Amusement Park']); // these fill a whole 2x2 block
+const JA={'School':'学校','Elementary School':'小学校','Junior High School':'中学校','Library':'図書館','Hospital':'病院','Store':'店','Post office':'郵便局','Station':'駅','House':'家','Restaurant':'レストラン','Shrine':'神社','Temple':'お寺','Church':'教会','Park':'公園','Bank':'銀行','Cafe':'カフェ','Hotel':'ホテル','Fire station':'消防署','Police station':'警察署','Zoo':'動物園','Aquarium':'水族館','Castle':'お城','Stadium':'スタジアム','Amusement Park':'遊園地','Cherry tree':'桜','Tree':'木','Pine tree':'松','Flowers':'花','Grass':'草','Rock':'岩','Pond':'池','Sunflower':'ひまわり','Mushroom':'きのこ','Palm tree':'ヤシの木','Dog':'犬','Cat':'ねこ','Fox':'きつね','Rabbit':'うさぎ','Cow':'牛','Horse':'馬','Raccoon':'アライグマ','Frog':'かえる','Bear':'くま','Bird':'鳥'};
+const SV=(vb,inner)=>'<svg viewBox="'+vb+'" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'+inner+'</svg>';
+// Hand-drawn pictures for the new places (used on the map, in the panel and while dragging)
+const ART={
+ 'Zoo':SV('0 0 100 100','<path d="M2 84 H98" stroke="#7a4a1f" stroke-width="3"/><g fill="#b9772f" stroke="#7a4a1f" stroke-width="1.5"><rect x="4" y="70" width="5" height="22" rx="1"/><rect x="12" y="70" width="5" height="22" rx="1"/><rect x="83" y="70" width="5" height="22" rx="1"/><rect x="91" y="70" width="5" height="22" rx="1"/></g><rect x="10" y="42" width="5" height="24" fill="#8a5a2b"/><circle cx="12.5" cy="37" r="11" fill="#2f9e44"/><rect x="85" y="41" width="5" height="25" fill="#8a5a2b"/><circle cx="87.5" cy="36" r="11" fill="#37b24d"/><g><rect x="31" y="40" width="5" height="34" fill="#f4c542" stroke="#c98b00" stroke-width=".8"/><ellipse cx="36" cy="38" rx="7" ry="4.5" fill="#f4c542" stroke="#c98b00" stroke-width=".8"/><circle cx="38.5" cy="37" r="1.1" fill="#222"/><path d="M32 34 V29 M35 34 V29" stroke="#b5651d" stroke-width="1.6" stroke-linecap="round"/><circle cx="33" cy="48" r="1.6" fill="#b5651d"/><circle cx="34.5" cy="57" r="1.6" fill="#b5651d"/><circle cx="32.5" cy="65" r="1.6" fill="#b5651d"/></g><rect x="20" y="36" width="9" height="56" rx="2" fill="#d98b45" stroke="#7a4a1f" stroke-width="2"/><rect x="71" y="36" width="9" height="56" rx="2" fill="#d98b45" stroke="#7a4a1f" stroke-width="2"/><path d="M15 40 Q50 6 85 40 L85 48 Q50 16 15 48Z" fill="#ffb703" stroke="#b5651d" stroke-width="2"/><text x="50" y="31" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="10" fill="#7a3e00">ZOO</text><circle cx="41.5" cy="58" r="3.2" fill="#ffc94a"/><circle cx="58.5" cy="58" r="3.2" fill="#ffc94a"/><circle cx="50" cy="67" r="15" fill="#e8590c"/><circle cx="50" cy="68" r="10" fill="#ffc94a"/><circle cx="46" cy="65" r="1.6" fill="#222"/><circle cx="54" cy="65" r="1.6" fill="#222"/><path d="M47.5 70 H52.5 L50 72.5Z" fill="#7a3e00"/><path d="M50 72.5 Q47.5 75 45.5 73 M50 72.5 Q52.5 75 54.5 73" stroke="#7a3e00" stroke-width="1.2" fill="none"/>'),
+ 'Aquarium':SV('0 0 100 100','<path d="M10 40 Q50 2 90 40Z" fill="#74c0fc" stroke="#1864ab" stroke-width="2.5"/><rect x="10" y="32" width="80" height="58" rx="6" fill="#4dabf7" stroke="#1864ab" stroke-width="2.5"/><rect x="18" y="45" width="64" height="34" rx="5" fill="#a5d8ff" stroke="#1864ab" stroke-width="2"/><path d="M18 52 Q26 48 34 52 T50 52 T66 52 T82 52" stroke="#fff" stroke-width="1.5" fill="none" opacity=".9"/><path d="M25 79 Q22 73 25 67 Q28 61 25 56" stroke="#2f9e44" stroke-width="2.5" fill="none"/><path d="M75 79 Q78 72 75 66" stroke="#2f9e44" stroke-width="2.5" fill="none"/><g transform="translate(37 64)"><ellipse rx="7" ry="4.5" fill="#ff922b"/><path d="M6 0 L12 -4.5 L12 4.5Z" fill="#ff922b"/><path d="M-1.5 -4 V4 M1.5 -4.2 V4.2" stroke="#fff" stroke-width="1.3"/><circle cx="-4" cy="-1" r="1" fill="#222"/></g><g transform="translate(62 71) scale(-.8 .8)"><ellipse rx="7" ry="4.5" fill="#ffd43b"/><path d="M6 0 L12 -4.5 L12 4.5Z" fill="#ffd43b"/><circle cx="-4" cy="-1" r="1.2" fill="#222"/></g><g transform="translate(66 57)"><path d="M-5 0 Q0 -8 5 0Z" fill="#f783ac"/><path d="M-3 0 Q-4 4 -3 7 M0 0 Q1 4 0 7 M3 0 Q4 4 3 7" stroke="#f783ac" stroke-width="1" fill="none"/></g><g fill="none" stroke="#fff" stroke-width="1"><circle cx="46" cy="57" r="1.6"/><circle cx="48" cy="53" r="1.1"/><circle cx="56" cy="62" r="1.3"/></g><rect x="29" y="33" width="42" height="10" rx="4" fill="#fff" stroke="#1864ab" stroke-width="1.5"/><text x="50" y="40.6" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="6.6" fill="#1864ab">AQUARIUM</text><rect x="44" y="81" width="12" height="9" fill="#1864ab"/><path d="M42 19 Q50 11 58 19 Q54 17 50 21 Q46 17 42 19Z" fill="#1864ab"/>'),
+ 'Castle':SV('0 0 100 100','<path d="M12 92 L20 66 H80 L88 92Z" fill="#adb5bd" stroke="#495057" stroke-width="2"/><path d="M17 79 H83 M14 86 H86 M32 66 L29 92 M50 66 V92 M68 66 L71 92" stroke="#868e96" stroke-width="1"/><rect x="24" y="53" width="52" height="14" fill="#fff" stroke="#495057" stroke-width="1.5"/><rect x="30" y="38" width="40" height="12" fill="#fff" stroke="#495057" stroke-width="1.5"/><rect x="37" y="23" width="26" height="12" fill="#fff" stroke="#495057" stroke-width="1.5"/><path d="M12 56 Q50 46 88 56 L79 47 H21Z" fill="#2f5d50" stroke="#1d3b33" stroke-width="1.5"/><path d="M42 49 L50 42 L58 49Z" fill="#fff" stroke="#1d3b33" stroke-width="1.2"/><path d="M21 40 Q50 31 79 40 L70 32 H30Z" fill="#2f5d50" stroke="#1d3b33" stroke-width="1.5"/><path d="M29 25 Q50 17 71 25 L59 13 H41Z" fill="#2f5d50" stroke="#1d3b33" stroke-width="1.5"/><path d="M41 14 Q38 7 43.5 8.5Z M59 14 Q62 7 56.5 8.5Z" fill="#fcc419" stroke="#c99a00" stroke-width=".8"/><g fill="#343a40"><rect x="30" y="58" width="5" height="5"/><rect x="47.5" y="58" width="5" height="5"/><rect x="65" y="58" width="5" height="5"/><rect x="37" y="42" width="4" height="4"/><rect x="59" y="42" width="4" height="4"/><rect x="46.5" y="26.5" width="7" height="5"/></g><path d="M44 92 V82 Q50 76 56 82 V92Z" fill="#5c3d2e"/>'),
+ 'Stadium':SV('0 0 100 100','<g stroke="#495057" stroke-width="2"><path d="M11 46 V20 M89 46 V20"/></g><rect x="5" y="13" width="12" height="8" rx="1.5" fill="#fff3bf" stroke="#495057" stroke-width="1.5"/><rect x="83" y="13" width="12" height="8" rx="1.5" fill="#fff3bf" stroke="#495057" stroke-width="1.5"/><ellipse cx="50" cy="62" rx="47" ry="31" fill="#ced4da" stroke="#495057" stroke-width="2"/><ellipse cx="50" cy="62" rx="41" ry="26" fill="#e03131"/><ellipse cx="50" cy="62" rx="36" ry="22" fill="none" stroke="#ff8787" stroke-width="2"/><ellipse cx="50" cy="63" rx="30" ry="17" fill="#40c057" stroke="#fff" stroke-width="1.5"/><path d="M50 46 V80" stroke="#fff" stroke-width="1.2"/><circle cx="50" cy="63" r="5" fill="none" stroke="#fff" stroke-width="1.2"/><path d="M50 31 V17" stroke="#495057" stroke-width="1.5"/><path d="M50 17 L61 20 L50 23Z" fill="#1c7ed6"/><path d="M30 34 V24" stroke="#495057" stroke-width="1.2"/><path d="M30 24 L37 26 L30 28Z" fill="#fab005"/><path d="M70 34 V24" stroke="#495057" stroke-width="1.2"/><path d="M70 24 L77 26 L70 28Z" fill="#fab005"/>'),
+ 'Amusement Park':SV('0 0 100 100','<path d="M36 44 L22 92 M36 44 L50 92" stroke="#495057" stroke-width="3"/><circle cx="36" cy="44" r="26" fill="none" stroke="#7048e8" stroke-width="3"/><g stroke="#9775fa" stroke-width="1.5"><path d="M10 44 H62 M36 18 V70 M17.6 25.6 L54.4 62.4 M54.4 25.6 L17.6 62.4"/></g><g stroke="#495057" stroke-width=".8"><circle cx="62" cy="44" r="4.5" fill="#f03e3e"/><circle cx="54.4" cy="62.4" r="4.5" fill="#fab005"/><circle cx="36" cy="70" r="4.5" fill="#40c057"/><circle cx="17.6" cy="62.4" r="4.5" fill="#228be6"/><circle cx="10" cy="44" r="4.5" fill="#ae3ec9"/><circle cx="17.6" cy="25.6" r="4.5" fill="#fd7e14"/><circle cx="36" cy="18" r="4.5" fill="#15aabf"/><circle cx="54.4" cy="25.6" r="4.5" fill="#e64980"/></g><circle cx="36" cy="44" r="4" fill="#ffd43b" stroke="#7048e8" stroke-width="1.5"/><path d="M66 52 V92 M78 62 V92 M89 40 V92" stroke="#adb5bd" stroke-width="1.8"/><path d="M58 92 V74 Q64 36 72 57 Q78 76 84 46 Q88 32 95 41 V92" stroke="#f03e3e" stroke-width="3" fill="none"/><path d="M60 92 L70 75 L80 92Z" fill="#ffd43b" stroke="#e8590c" stroke-width="1.5"/><path d="M70 75 L66 92 M70 75 L74 92" stroke="#f76707" stroke-width="2.5"/><path d="M70 75 V68" stroke="#495057" stroke-width="1"/><path d="M70 68 L75 70 L70 72Z" fill="#f03e3e"/><path d="M8 92 Q9 82 10 76" stroke="#666" stroke-width=".8" fill="none"/><ellipse cx="10" cy="72" rx="4" ry="5" fill="#ff6b6b"/><path d="M93 30 Q92 22 91 18" stroke="#666" stroke-width=".8" fill="none"/>'),
+ 'Temple':SV('0 0 64 64','<rect x="6" y="54" width="52" height="7" rx="1.5" fill="#adb5bd" stroke="#868e96"/><rect x="14" y="34" width="36" height="20" fill="#a0522d" stroke="#5c2e12" stroke-width="1.5"/><path d="M20 34 V54 M44 34 V54" stroke="#5c2e12" stroke-width="2.2"/><rect x="26" y="39" width="12" height="15" fill="#3b2314"/><path d="M32 39 V54" stroke="#a0522d" stroke-width="1"/><path d="M2 37 Q32 27 62 37 Q56 31 50 27 L46 17 H18 L14 27 Q8 31 2 37Z" fill="#495057" stroke="#212529" stroke-width="1.5"/><path d="M16 17 H48" stroke="#212529" stroke-width="3" stroke-linecap="round"/><path d="M15 17 Q12 12 16 11 M49 17 Q52 12 48 11" stroke="#212529" stroke-width="2" fill="none"/><circle cx="32" cy="13.5" r="2.5" fill="#fcc419"/>'),
+ 'Elementary School':SV('0 0 64 64','<rect x="6" y="24" width="52" height="34" fill="#ffe8cc" stroke="#d9480f" stroke-width="2"/><path d="M3 26 L32 10 L61 26Z" fill="#ff6b6b" stroke="#c92a2a" stroke-width="2" stroke-linejoin="round"/><circle cx="32" cy="19" r="5.5" fill="#fff" stroke="#c92a2a" stroke-width="1.5"/><path d="M32 19 V15.5 M32 19 H34.8" stroke="#333" stroke-width="1.3" stroke-linecap="round"/><g fill="#74c0fc" stroke="#1864ab" stroke-width="1"><rect x="10" y="30" width="9" height="7"/><rect x="45" y="30" width="9" height="7"/><rect x="10" y="43" width="9" height="7"/><rect x="45" y="43" width="9" height="7"/></g><rect x="23" y="28" width="18" height="16" rx="2" fill="#fff" stroke="#d9480f" stroke-width="1.5"/><text x="32" y="41" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="900" fill="#d9480f">小</text><rect x="27" y="47" width="10" height="11" fill="#868e96"/>'),
+ 'Junior High School':SV('0 0 64 64','<rect x="6" y="14" width="52" height="44" fill="#e7f5ff" stroke="#1864ab" stroke-width="2"/><rect x="3" y="9" width="58" height="7" rx="2" fill="#1c7ed6" stroke="#1864ab"/><g fill="#a5d8ff" stroke="#1864ab" stroke-width="1"><rect x="10" y="20" width="9" height="6"/><rect x="45" y="20" width="9" height="6"/><rect x="10" y="31" width="9" height="6"/><rect x="45" y="31" width="9" height="6"/><rect x="10" y="42" width="9" height="6"/><rect x="45" y="42" width="9" height="6"/></g><rect x="23" y="19" width="18" height="16" rx="2" fill="#fff" stroke="#1864ab" stroke-width="1.5"/><text x="32" y="32" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="900" fill="#1864ab">中</text><rect x="26" y="44" width="12" height="14" fill="#495057"/><path d="M32 44 V58" stroke="#868e96"/>'),
+ 'Park':SV('0 0 64 64','<ellipse cx="32" cy="55" rx="29" ry="6" fill="#8ce99a"/><rect x="13" y="30" width="5" height="25" fill="#8a5a2b"/><circle cx="15.5" cy="24" r="12" fill="#2f9e44"/><circle cx="9" cy="29" r="7" fill="#37b24d"/><circle cx="22" cy="28" r="7" fill="#40c057"/><path d="M36 55 V27 H42 V55" stroke="#e8590c" stroke-width="2.5" fill="none"/><path d="M36 33 H42 M36 39 H42 M36 45 H42 M36 51 H42" stroke="#e8590c" stroke-width="1.5"/><path d="M42 28 Q53 31 60 55" stroke="#fab005" stroke-width="4.5" fill="none" stroke-linecap="round"/><rect x="21" y="46" width="15" height="3" rx="1" fill="#a0522d"/><path d="M23 49 V55 M34 49 V55" stroke="#5c2e12" stroke-width="2"/>')
+};
+
+const xs=[10,30,50,70,90],ys=[12.5,37.5,62.5,87.5];
+const pos=[];ys.forEach((y,r)=>xs.forEach((x,c)=>pos.push({x,y,r,c}))); // 20 town blocks
+const emptyMap=()=>pos.map(()=>Array(4).fill(null));
+let placements=emptyMap();
+const defaults=['School','Library','Hospital','Pond','House','Store','Park','Post office','Cherry tree','Shrine','Restaurant','Tree'];
+const itemByName=n=>Object.values(ITEMS).flat().find(x=>x[1]===n)||(['🌳','Park']);
+defaults.forEach((n,i)=>{placements[i][0]=itemByName(n)});
+// Each town block has four independent cells, indexed row-major.
+const cloneMap=map=>map.map(block=>block.map(item=>item?[...item]:null));
+const validItem=item=>Array.isArray(item)&&item.length===2&&typeof item[0]==='string'&&typeof item[1]==='string';
+function convertMap(saved){
+ if(Array.isArray(saved)&&saved.length===pos.length&&saved.every(b=>Array.isArray(b)&&b.length===4))
+  return saved.map(b=>b.map(item=>validItem(item)?[...item]:null));
+ // Import V9's 12 blocks x 9 objects without changing its saved copy.
+ if(Array.isArray(saved)&&saved.length===12&&saved.every(b=>Array.isArray(b)&&b.length===9)){
+  const out=emptyMap(),oldX=[12.5,37.5,62.5,87.5],oldY=[16.65,50,83.35];
+  saved.forEach((block,i)=>block.forEach((item,j)=>{
+   if(!validItem(item))return;
+   const x=oldX[i%4]+((j%3)-1)*5,y=oldY[Math.floor(i/4)]+(Math.floor(j/3)-1)*7;
+   const order=pos.map((p,k)=>({k,d:Math.hypot(p.x-x,p.y-y)})).sort((a,b)=>a.d-b.d);
+   for(const {k} of order){const cell=out[k].findIndex(v=>v===null);if(cell>=0){out[k][cell]=[...item];break}}
+  }));return out;
+ }
+ // Import the earlier V8 19-plot format into the nearest large block and available cell.
+ if(Array.isArray(saved)&&saved.length===19){
+  const out=emptyMap(),oldXs=[8.2,27.7,50,72.2,92],oldYs=[11,37,63,89];
+  let oldIndex=0;
+  oldYs.forEach((y,r)=>oldXs.forEach((x,c)=>{
+   if(r===3&&c===2)return;
+   const item=saved[oldIndex++];if(!validItem(item))return;
+   const block=pos.reduce((best,p,i)=>Math.hypot(p.x-x,p.y-y)<Math.hypot(pos[best].x-x,pos[best].y-y)?i:best,0);
+   const preferred=(y<pos[block].y?0:2)+(x<pos[block].x?0:1);
+   const cell=out[block][preferred]===null?preferred:out[block].findIndex(v=>v===null);
+   if(cell!==-1)out[block][cell]=[...item];
+  }));return out;
+ }
+ return null;
+}
+let category='Places',selected='School',erase=false,mode='build',sound=true,japanese=false,history=[],future=[],target=null;
+function speak(t){if(sound&&'speechSynthesis'in window){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=.82;const voices=speechSynthesis.getVoices();u.voice=voices.find(v=>v.lang==='en-US'&&/female|zira|samantha|jenny|aria/i.test(v.name))||voices.find(v=>v.lang==='en-US')||null;speechSynthesis.speak(u)}}
+function toast(t){$('toast').textContent=t;$('toast').classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>$('toast').classList.remove('show'),2400)}
+function drawTabs(){$('tabs').innerHTML='';Object.keys(ITEMS).forEach(k=>{const b=document.createElement('button');b.className='tab'+(k===category?' active':'');b.textContent=k;b.onclick=()=>{category=k;drawTabs();drawInventory()};$('tabs').append(b)})}
+function drawInventory(){$('inventory').innerHTML='';ITEMS[category].forEach(([e,n])=>{const b=document.createElement('button');b.className='tile'+(selected===n&&!erase?' active':'');b.dataset.name=n;const ic=iconNode([e,n],'e'),tn=document.createElement('span'),tj=document.createElement('span');tn.className='tname';tn.textContent=n;tj.className='tja';tj.textContent=JA[n]||'';b.append(ic,tn,tj);if(LANDMARKS.has(n)){const t=document.createElement('span');t.className='bigtag';t.textContent='2×2';b.append(t);b.title=n+' — uses a whole block'}b.onclick=()=>{selected=n;erase=false;$('erase').textContent='🗑 Eraser: Off';drawInventory();toast('Selected: '+n)};$('inventory').append(b)})}
+function snapshot(){history.push(cloneMap(placements));if(history.length>80)history.shift();future=[]}
+function iconNode(item,cls){const sp=document.createElement('span');sp.className=cls;if(ART[item[1]])sp.innerHTML=ART[item[1]];else sp.textContent=item[0];return sp}
+// A block is a full-block landmark when all four spaces hold the same landmark (saved maps keep the same 20x4 format).
+function isLandmarkBlock(b){return !!(b&&b[0]&&LANDMARKS.has(b[0][1])&&b.every(x=>x&&x[1]===b[0][1]))}
+function drawPlots(){
+ const root=$('plots');root.innerHTML='';
+ pos.forEach((p,i)=>{
+  const block=document.createElement('div');block.className='townblock';block.dataset.b=i;
+  block.style.left=p.x+'%';block.style.top=p.y+'%';
+  const land=isLandmarkBlock(placements[i]);
+  if(land){
+   block.classList.add('landmark');const art=document.createElement('div');art.className='landart';
+   const lab=document.createElement('span');lab.className='landlabel';lab.textContent=placements[i][0][1];
+   art.append(iconNode(placements[i][0],'landicon'));block.append(art,lab);
+  }
+  placements[i].forEach((item,j)=>{
+   const cell=document.createElement('button');cell.type='button';cell.dataset.b=i;cell.dataset.c=j;cell.className='towncell'+(!item?' empty':'');
+   if(land){cell.setAttribute('aria-label',item[1]+' (whole block)');cell.title=item[1]}
+   else{
+    cell.setAttribute('aria-label',item?item[1]:'Empty space '+(j+1));cell.title=item?item[1]:'Place '+selected;
+    if(item){const label=document.createElement('span');label.className='cell-label';label.textContent=item[1];cell.append(iconNode(item,'cell-emoji'),label)}
+   }
+   cell.onclick=()=>{
+    if(mode==='mission'){toast('Use the direction buttons to travel!');return}
+    placeAt(i,j,erase?null:itemByName(selected));
+   };block.append(cell);
+  });root.append(block);
+ });
+}
+// One function for click-to-place, drag-and-drop and the eraser. Every change is ONE undo step.
+function placeAt(i,j,item){
+ const block=placements[i],land=isLandmarkBlock(block);
+ if(!item){ // eraser
+  if(land){const n=block[0][1];snapshot();placements[i]=[null,null,null,null];drawPlots();toast('🗑 Removed the '+n);return}
+  if(!block[j])return;snapshot();placements[i][j]=null;drawPlots();return;
+ }
+ const name=item[1];
+ if(LANDMARKS.has(name)){
+  if(land&&block[0][1]===name){toast('The '+name+' is already here!');return}
+  const build=()=>{snapshot();placements[i]=[0,1,2,3].map(()=>[...item]);drawPlots();speak(name);toast('🏗️ The '+name+' uses the whole block!')};
+  const filled=block.filter(Boolean);
+  if(!filled.length){build();return}
+  const what=land?'the '+block[0][1]:filled.length===1?'the '+filled[0][1]:'the '+filled.length+' objects';
+  modal('Replace this block?','The '+name+' needs the whole block. Replace '+what+' with the '+name+'? / '+(JA[name]||name)+'はブロック全体を使います。おきかえますか？',build);
+  return;
+ }
+ if(land){
+  const old=block[0][1];
+  modal('Remove the '+old+'?','The '+old+' uses the whole block. Remove it and put the '+name+' here? / '+(JA[old]||old)+'をけして、'+(JA[name]||name)+'をおきますか？',()=>{snapshot();placements[i]=[null,null,null,null];placements[i][j]=[...item];drawPlots();speak(name)});
+  return;
+ }
+ snapshot();placements[i][j]=[...item];drawPlots();speak(name);
+}
+
+/* ================= CHARACTERS (V13): 10 playable characters, 4 separate poses each ================= */
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v);return true}catch(e){return false}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+// New keys only — the saved map keys (pino_direction_map_v10/v9/v1) are never touched here.
+const K_NAME='pino_city_profile_name',K_PHOTO='pino_city_profile_photo',K_CHAR='pino_city_character',K_SETUP='pino_city_setup_done';
+const CHARACTERS=[
+ {id:'pino',name:'Pino',g:'boy',style:'pino',skin:'#f4bd90',line:'#a76849',hair:'#292d39',acc:'#2677b2',acc2:'#18558b',top:'#f47c38',topLine:'#a84e26',pattern:'pocket',pat:'#ffb35c',legs:'#263e83',shoes:'#3a2a22',bag:'#2677b2',bg:'#ffe9a8'},
+ {id:'kenta',name:'Kenta',g:'boy',style:'spiky',skin:'#f8cfa8',line:'#b07a55',hair:'#3b2416',top:'#e8443a',topLine:'#9e2a22',pattern:'hoodie',pat:'#ffffff',legs:'#3b3f4a',shoes:'#f4f4f4',bag:'#ffc93c',bg:'#ffd9d4'},
+ {id:'leo',name:'Leo',g:'boy',style:'cap',skin:'#e0a477',line:'#8f5a38',hair:'#1d1d22',acc:'#2e9d4f',acc2:'#1d6b34',top:'#ffffff',topLine:'#7b93a8',pattern:'stripes',pat:'#2e9d4f',legs:'#5a6c8a',shoes:'#e84a3a',bag:'#e84a3a',bg:'#d8f5df'},
+ {id:'sora',name:'Sora',g:'boy',style:'curly',glasses:true,skin:'#c98a5e',line:'#7a4e30',hair:'#2b1a10',top:'#3a8de0',topLine:'#1f5b9a',pattern:'star',pat:'#ffe066',legs:'#2f3a56',shoes:'#ff8c2a',bag:'#ff8c2a',bg:'#d6e9ff'},
+ {id:'riku',name:'Riku',g:'boy',style:'sidepart',skin:'#fbd6b8',line:'#b5866a',hair:'#8a4b1f',top:'#7fd0ff',topLine:'#3e8ec4',pattern:'overalls',pat:'#3f6fd8',legs:'#3f6fd8',shoes:'#5b3a29',bag:'#ffb000',bg:'#fff1b8'},
+ {id:'hana',name:'Hana',g:'girl',style:'twintails',skin:'#f8cfa8',line:'#b07a55',hair:'#2a1f1a',acc:'#ff5fa2',top:'#ff8fc1',topLine:'#c4507f',pattern:'heart',pat:'#ffffff',skirt:'#ff6fae',legs:'#ffffff',shoes:'#d93a7a',bag:'#ffd23f',bg:'#ffe0ef'},
+ {id:'yuki',name:'Yuki',g:'girl',style:'bob',skin:'#fbd6b8',line:'#b5866a',hair:'#3a2a20',acc:'#ff4d6d',top:'#ffffff',topLine:'#7b93a8',pattern:'sailor',pat:'#ff4d6d',collar:'#24407a',skirt:'#24407a',legs:'#f2f2f2',shoes:'#2a2a2a',bag:'#ff4d6d',bg:'#e3ecff'},
+ {id:'mia',name:'Mia',g:'girl',style:'ponytail',skin:'#e0a477',line:'#8f5a38',hair:'#a0522d',acc:'#8f5bd6',top:'#b48cff',topLine:'#6f4bb8',pattern:'flower',pat:'#ffffff',legs:'#4b3b8f',shoes:'#ffffff',bag:'#29c4a9',bg:'#eee3ff'},
+ {id:'emi',name:'Emi',g:'girl',style:'long',skin:'#c98a5e',line:'#7a4e30',hair:'#1f1a2e',acc:'#ff8c2a',top:'#ffd23f',topLine:'#c99a00',pattern:'belt',pat:'#ff8c2a',skirt:'#ffd23f',legs:'#ff8c2a',shoes:'#8a3b12',bag:'#3a8de0',bg:'#fff3c4'},
+ {id:'rin',name:'Rin',g:'girl',style:'buns',skin:'#f4bd90',line:'#a76849',hair:'#4a2b1a',acc:'#29c4a9',top:'#ffffff',topLine:'#8aa0b5',pattern:'pinafore',pat:'#29c4a9',skirt:'#29c4a9',legs:'#ffd6e0',shoes:'#e84a3a',bag:'#ff8c2a',bg:'#d6f7f1'}
+];
+const GIRL_SIDE=c=>'<path d="M19 20 Q15 1 33 1 Q47 1 47 12 Q41 9 36 12 Q31 15 28 21Z" fill="'+c.hair+'"/>';
+const TAILS=c=>'<g fill="'+c.hair+'"><path d="M15 12 Q4 16 6 30 Q8 38 12 40 Q11 30 17 22Z"/><path d="M45 12 Q56 16 54 30 Q52 38 48 40 Q49 30 43 22Z"/></g>';
+const BOW=(c,x,y)=>'<g fill="'+c.acc+'"><path d="M'+x+' '+y+' l-7 -4 l1 9Z"/><path d="M'+x+' '+y+' l7 -4 l-1 9Z"/><circle cx="'+x+'" cy="'+(y+.5)+'" r="2.2"/></g>';
+// Each hairstyle is drawn separately for the front (f), back (b) and side (s) views; fb/sb are parts behind the body.
+const HAIR={
+ pino:c=>({f:'<path d="M15 17 Q11 -1 30 1 Q49 -1 45 17 Q37 9 30 12 Q23 9 15 17" fill="'+c.hair+'"/><path d="M16 10 Q30 -1 44 10" stroke="'+c.acc2+'" stroke-width="5" fill="none"/><path d="M14 13 Q30 8 46 13" stroke="'+c.acc+'" stroke-width="5" fill="none"/>',
+  b:'<circle cx="30" cy="17" r="15" fill="'+c.hair+'"/><path d="M14 13 Q30 4 46 13" stroke="'+c.acc+'" stroke-width="6" fill="none"/>',
+  s:'<path d="M19 19 Q15 1 33 1 Q47 1 47 11 Q39 8 33 11 Q29 14 27 21 Z" fill="'+c.hair+'"/><path d="M18 12 Q33 3 47 10" stroke="'+c.acc+'" stroke-width="5" fill="none"/>'}),
+ spiky:c=>({f:'<path d="M14 19 Q11 8 17 5 L16 -1 L23 3 L27 -3 L31 2 L36 -3 L38 3 L45 0 L43 6 Q49 10 46 19 Q42 11 36 12 L33 8 L30 12 L25 8 L22 13 Q17 13 14 19Z" fill="'+c.hair+'"/>',
+  b:'<circle cx="30" cy="17" r="15" fill="'+c.hair+'"/><path d="M15 12 L14 3 L21 6 L24 -1 L30 4 L36 -2 L39 5 L46 2 L45 12Z" fill="'+c.hair+'"/>',
+  s:'<path d="M18 20 Q15 7 20 4 L18 -1 L25 2 L28 -3 L32 1 L37 -2 L38 3 L45 2 L44 7 Q48 9 47 12 Q40 9 34 12 Q29 14 27 21Z" fill="'+c.hair+'"/>'}),
+ cap:c=>({f:'<path d="M15 20 Q14 13 17 11 H43 Q46 13 45 20 Q42 14 30 14 Q18 14 15 20Z" fill="'+c.hair+'"/><path d="M14 13 Q14 0 30 0 Q46 0 46 13Z" fill="'+c.acc+'"/><circle cx="30" cy="1" r="2" fill="'+c.acc2+'"/><path d="M12 13 Q30 19 48 13 Q47 10 46 10 Q30 15 14 10 Q13 10 12 13Z" fill="'+c.acc2+'"/>',
+  b:'<circle cx="30" cy="17" r="15" fill="'+c.hair+'"/><path d="M14 14 Q14 0 30 0 Q46 0 46 14Z" fill="'+c.acc+'"/><path d="M25 10 H35 V14 H25Z" fill="'+c.acc2+'"/>',
+  s:'<path d="M19 21 Q17 12 21 10 H45 Q47 12 46 14 Q38 12 31 14 Q28 16 27 21Z" fill="'+c.hair+'"/><path d="M18 12 Q18 0 33 0 Q47 0 47 12Z" fill="'+c.acc+'"/><path d="M44 9 L57 11 Q58 13 56 14 L44 13Z" fill="'+c.acc2+'"/>'}),
+ curly:c=>({f:'<g fill="'+c.hair+'"><circle cx="16" cy="14" r="5"/><circle cx="18" cy="7" r="5.5"/><circle cx="24" cy="3" r="5.5"/><circle cx="31" cy="2" r="5.5"/><circle cx="38" cy="4" r="5.5"/><circle cx="43" cy="9" r="5"/><circle cx="44" cy="15" r="4"/><path d="M15 15 Q30 4 45 15 L44 10 Q30 0 16 10Z"/></g>',
+  b:'<g fill="'+c.hair+'"><circle cx="30" cy="17" r="15"/><circle cx="16" cy="12" r="5"/><circle cx="20" cy="5" r="5.5"/><circle cx="28" cy="2" r="5.5"/><circle cx="36" cy="3" r="5.5"/><circle cx="43" cy="8" r="5"/><circle cx="45" cy="16" r="4.5"/><circle cx="15" cy="20" r="4.5"/><circle cx="20" cy="27" r="4"/><circle cx="40" cy="27" r="4"/><circle cx="45" cy="23" r="4"/></g>',
+  s:'<g fill="'+c.hair+'"><circle cx="21" cy="14" r="5.5"/><circle cx="23" cy="6" r="5.5"/><circle cx="30" cy="2.5" r="5.5"/><circle cx="38" cy="2.5" r="5.5"/><circle cx="44" cy="7" r="4.5"/><circle cx="20" cy="21" r="4.5"/><path d="M19 22 Q17 6 33 3 Q46 3 47 10 Q39 8 33 11 Q29 14 27 21Z"/></g>'}),
+ sidepart:c=>({f:'<path d="M15 18 Q11 0 30 1 Q49 0 45 18 Q44 10 39 8 Q28 14 17 11 Q15 14 15 18Z" fill="'+c.hair+'"/><path d="M37 3 Q35 7 39 8" stroke="#ffffff55" stroke-width="1.2" fill="none"/>',
+  b:'<circle cx="30" cy="17" r="15" fill="'+c.hair+'"/><path d="M17 25 Q30 29 43 25" stroke="#00000022" stroke-width="2" fill="none"/>',
+  s:'<path d="M19 19 Q15 1 33 1 Q47 1 47 11 Q39 8 33 11 Q29 14 27 21 Z" fill="'+c.hair+'"/>'}),
+ twintails:c=>({fb:TAILS(c),f:'<path d="M15 18 Q12 0 30 1 Q48 0 45 18 Q42 10 37 12 Q34 7 30 11 Q26 7 23 12 Q18 10 15 18Z" fill="'+c.hair+'"/><circle cx="15" cy="13" r="3" fill="'+c.acc+'"/><circle cx="45" cy="13" r="3" fill="'+c.acc+'"/>',
+  b:TAILS(c)+'<circle cx="30" cy="17" r="15" fill="'+c.hair+'"/><path d="M30 3 V31" stroke="#ffffff33" stroke-width="1.3"/><circle cx="15" cy="13" r="3" fill="'+c.acc+'"/><circle cx="45" cy="13" r="3" fill="'+c.acc+'"/>',ears:false,
+  sb:'<path d="M22 9 Q8 14 10 30 Q12 38 16 40 Q15 30 24 20Z" fill="'+c.hair+'"/>',s:GIRL_SIDE(c)+'<circle cx="21" cy="11" r="3" fill="'+c.acc+'"/>'}),
+ bob:c=>({f:'<path d="M13 23 Q10 1 30 1 Q50 1 47 23 L42 24 Q44 13 37 10 Q28 14 18 10 Q15 15 18 24Z" fill="'+c.hair+'"/>'+BOW(c,40,4),
+  b:'<path d="M13 24 Q12 1 30 1 Q48 1 47 24 Q30 28 13 24Z" fill="'+c.hair+'"/>'+BOW(c,40,4),ears:false,
+  s:'<path d="M18 25 Q13 1 33 1 Q48 1 47 12 Q41 9 36 12 Q32 16 33 25Z" fill="'+c.hair+'"/>'+BOW(c,30,3),sideEar:false}),
+ ponytail:c=>({f:'<path d="M27 1 Q30 -6 33 1Z" fill="'+c.hair+'"/><path d="M15 18 Q12 0 30 1 Q48 0 45 18 Q38 9 30 10 Q22 9 15 18Z" fill="'+c.hair+'"/><circle cx="30" cy="1" r="3" fill="'+c.acc+'"/>',
+  b:'<circle cx="30" cy="17" r="15" fill="'+c.hair+'"/><path d="M26 6 Q20 26 30 40 Q40 26 34 6Z" fill="'+c.hair+'" stroke="#00000022"/><circle cx="30" cy="6" r="3.5" fill="'+c.acc+'"/>',
+  sb:'<path d="M24 5 Q8 10 11 32 Q17 26 25 12Z" fill="'+c.hair+'"/>',s:GIRL_SIDE(c)+'<circle cx="24" cy="5" r="3.5" fill="'+c.acc+'"/>'}),
+ long:c=>({fb:'<path d="M13 17 Q12 1 30 1 Q48 1 47 17 L49 42 Q40 45 30 44 Q20 45 11 42Z" fill="'+c.hair+'"/>',
+  f:'<path d="M15 17 Q13 2 30 2 Q47 2 45 17 Q40 9 30 9 Q20 9 15 17Z" fill="'+c.hair+'"/><path d="M15 10 Q30 0 45 10" stroke="'+c.acc+'" stroke-width="3.5" fill="none"/>',
+  b:'<path d="M14 17 Q14 1 30 1 Q46 1 46 17 L47 43 Q30 47 13 43Z" fill="'+c.hair+'"/><path d="M15 10 Q30 0 45 10" stroke="'+c.acc+'" stroke-width="3.5" fill="none"/>',ears:false,
+  sb:'<path d="M22 8 Q13 22 15 43 L29 43 Q27 26 31 12Z" fill="'+c.hair+'"/>',s:GIRL_SIDE(c)+'<path d="M20 10 Q33 0 46 8" stroke="'+c.acc+'" stroke-width="3.5" fill="none"/>',sideEar:false}),
+ buns:c=>({fb:'<g fill="'+c.hair+'"><circle cx="17" cy="4" r="6"/><circle cx="43" cy="4" r="6"/></g><g fill="'+c.acc+'"><rect x="14" y="7" width="7" height="3" rx="1.5"/><rect x="39" y="7" width="7" height="3" rx="1.5"/></g>',
+  f:'<path d="M15 17 Q12 2 30 2 Q48 2 45 17 Q38 10 30 10 Q22 10 15 17Z" fill="'+c.hair+'"/>',
+  b:'<g fill="'+c.hair+'"><circle cx="17" cy="4" r="6"/><circle cx="43" cy="4" r="6"/><circle cx="30" cy="17" r="15"/></g><g fill="'+c.acc+'"><rect x="14" y="7" width="7" height="3" rx="1.5"/><rect x="39" y="7" width="7" height="3" rx="1.5"/></g>',
+  sb:'<circle cx="26" cy="1" r="6" fill="'+c.hair+'"/><rect x="23" y="5" width="7" height="3" rx="1.5" fill="'+c.acc+'"/>',s:GIRL_SIDE(c)})
+};
+function torsoFront(c){
+ let t='<rect x="16" y="27" width="28" height="27" rx="8" fill="'+c.top+'" stroke="'+c.topLine+'" stroke-width="2"/>';
+ const p=c.pattern,P=c.pat;
+ if(p==='pocket')t+='<rect x="24" y="33" width="12" height="15" rx="3" fill="'+P+'"/>';
+ if(p==='hoodie')t+='<path d="M21 28 Q30 34 39 28" stroke="'+c.topLine+'" stroke-width="2" fill="none"/><path d="M27 30 V37 M33 30 V37" stroke="'+P+'" stroke-width="1.6" stroke-linecap="round"/><rect x="21" y="42" width="18" height="8" rx="3" fill="'+c.topLine+'" opacity=".35"/>';
+ if(p==='stripes')t+='<g fill="'+P+'"><rect x="17" y="33" width="26" height="3.5"/><rect x="17" y="40" width="26" height="3.5"/><rect x="17" y="47" width="26" height="3.5"/></g>';
+ if(p==='star')t+='<path d="M30 32 L32.4 37 L38 37.6 L33.8 41.2 L35 46.6 L30 43.8 L25 46.6 L26.2 41.2 L22 37.6 L27.6 37Z" fill="'+P+'"/>';
+ if(p==='overalls')t+='<path d="M21 36 H39 V54 H21Z" fill="'+P+'" stroke="#00000030"/><path d="M21 37 L19 28 M39 37 L41 28" stroke="'+P+'" stroke-width="3"/><circle cx="23.5" cy="39" r="1.3" fill="#fff"/><circle cx="36.5" cy="39" r="1.3" fill="#fff"/><rect x="26" y="42" width="8" height="6" rx="1.5" fill="#00000020"/>';
+ if(p==='heart')t+='<path d="M30 40 Q22 34 25 30.5 Q27.5 28.5 30 31.5 Q32.5 28.5 35 30.5 Q38 34 30 40Z" fill="'+P+'"/>';
+ if(p==='flower')t+='<g fill="'+P+'"><circle cx="30" cy="35" r="2.6"/><circle cx="34" cy="38" r="2.6"/><circle cx="32.5" cy="42.5" r="2.6"/><circle cx="27.5" cy="42.5" r="2.6"/><circle cx="26" cy="38" r="2.6"/></g><circle cx="30" cy="39" r="2" fill="#ffd23f"/>';
+ if(c.skirt)t+='<path d="M13 56 L18 41 H42 L47 56 Q30 59 13 56Z" fill="'+c.skirt+'" stroke="'+c.topLine+'" stroke-width="1.5"/>';
+ if(p==='sailor')t+='<path d="M18 29 L30 38 L42 29 L42 33 L30 42 L18 33Z" fill="'+c.collar+'"/><path d="M27 40 L30 46 L33 40Z" fill="'+P+'"/>';
+ if(p==='belt')t+='<rect x="17" y="39" width="26" height="3.5" fill="'+P+'"/><circle cx="30" cy="40.7" r="2.4" fill="#fff" stroke="'+P+'"/>';
+ if(p==='pinafore')t+='<rect x="22" y="32" width="16" height="11" rx="2" fill="'+c.skirt+'"/><path d="M22 33 L19 28 M38 33 L41 28" stroke="'+c.skirt+'" stroke-width="3"/><circle cx="30" cy="37" r="2" fill="#fff"/>';
+ return t;
+}
+function torsoBack(c){
+ let t='<rect x="16" y="27" width="28" height="27" rx="8" fill="'+c.top+'" stroke="'+c.topLine+'" stroke-width="2"/>';
+ if(c.skirt)t+='<path d="M13 56 L18 41 H42 L47 56 Q30 59 13 56Z" fill="'+c.skirt+'" stroke="'+c.topLine+'" stroke-width="1.5"/>';
+ if(c.pattern==='sailor')t+='<rect x="18" y="28" width="24" height="8" rx="2" fill="'+c.collar+'"/>';
+ return t+'<rect x="20" y="30" width="20" height="21" rx="5" fill="'+c.bag+'" stroke="#00000035" stroke-width="1.5"/><rect x="23" y="38" width="14" height="6" rx="2" fill="#00000025"/>';
+}
+function torsoSide(c){
+ let t='<rect x="21" y="27" width="22" height="27" rx="7" fill="'+c.top+'" stroke="'+c.topLine+'" stroke-width="2"/>';
+ if(c.pattern==='stripes')t+='<g fill="'+c.pat+'"><rect x="22" y="33" width="20" height="3.5"/><rect x="22" y="40" width="20" height="3.5"/><rect x="22" y="47" width="20" height="3.5"/></g>';
+ if(c.pattern==='overalls')t+='<rect x="27" y="36" width="15" height="18" fill="'+c.pat+'"/><path d="M29 37 L31 28" stroke="'+c.pat+'" stroke-width="3"/>';
+ if(c.skirt)t+='<path d="M18 56 L22 41 H42 L46 56 Q32 59 18 56Z" fill="'+c.skirt+'" stroke="'+c.topLine+'" stroke-width="1.5"/>';
+ if(c.pattern==='belt')t+='<rect x="22" y="39" width="20" height="3.5" fill="'+c.pat+'"/>';
+ if(c.pattern==='pinafore')t+='<rect x="30" y="32" width="12" height="11" rx="2" fill="'+c.skirt+'"/>';
+ if(c.pattern==='sailor')t+='<path d="M21 29 H31 L27 37 H21Z" fill="'+c.collar+'"/>';
+ return t+'<rect x="15" y="30" width="8" height="18" rx="3" fill="'+c.bag+'" stroke="#00000035" stroke-width="1.5"/>';
+}
+const svgVB=(inner,vb)=>'<svg viewBox="'+vb+'" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'+inner+'</svg>';
+const POSE_CACHE={};
+function posesOf(c){
+ if(POSE_CACHE[c.id])return POSE_CACHE[c.id];
+ const H=HAIR[c.style](c),girl=c.g==='girl',sleeve=c.top;
+ const shadow='<ellipse cx="30" cy="66" rx="18" ry="4" fill="#355267" opacity=".25"/>';
+ const shoe=(cx)=>'<ellipse cx="'+cx+'" cy="64" rx="5.5" ry="2.8" fill="'+c.shoes+'" stroke="#00000045" stroke-width=".8"/>';
+ const legsFB='<g class="leg leg-a"><rect x="20" y="45" width="9" height="18" rx="3" fill="'+c.legs+'" stroke="#00000025" stroke-width=".8"/>'+shoe(24.5)+'</g><g class="leg leg-b"><rect x="31" y="45" width="9" height="18" rx="3" fill="'+c.legs+'" stroke="#00000025" stroke-width=".8"/>'+shoe(35.5)+'</g>';
+ const arm=x=>'<rect x="'+x+'" y="29" width="8" height="19" rx="4" fill="'+c.skin+'" stroke="'+c.line+'" stroke-width="1.5"/><rect x="'+x+'" y="28" width="8" height="8" rx="3" fill="'+sleeve+'" stroke="'+c.topLine+'" stroke-width=".8"/>';
+ const armsFB='<g class="arm arm-a">'+arm(9)+'</g><g class="arm arm-b">'+arm(43)+'</g>';
+ const head='<circle cx="30" cy="17" r="15" fill="'+c.skin+'" stroke="'+c.line+'" stroke-width="1.5"/>';
+ const eye=x=>'<circle cx="'+x+'" cy="19" r="'+(girl?2.1:1.9)+'" fill="#252a33"/><circle cx="'+(x+.7)+'" cy="18.3" r=".7" fill="#fff"/>';
+ const face=eye(24)+eye(36)+(girl?'<path d="M21.8 17.6 L20.6 16.4 M38.2 17.6 L39.4 16.4" stroke="#252a33" stroke-width="1" stroke-linecap="round"/>':'')+
+  '<ellipse cx="20.5" cy="23.5" rx="2.6" ry="1.5" fill="#ff7b8a" opacity=".4"/><ellipse cx="39.5" cy="23.5" rx="2.6" ry="1.5" fill="#ff7b8a" opacity=".4"/><path d="M26 25 Q30 28.5 34 25" stroke="#9b4e40" stroke-width="1.7" fill="none" stroke-linecap="round"/>';
+ const glassesF=c.glasses?'<g fill="none" stroke="#2b2b33" stroke-width="1.4"><circle cx="24" cy="19" r="4.2"/><circle cx="36" cy="19" r="4.2"/><path d="M28.2 19 H31.8 M19.8 18 L15.5 17 M40.2 18 L44.5 17"/></g>':'';
+ const ears=H.ears===false?'':'<circle cx="15.5" cy="19" r="3" fill="'+c.skin+'" stroke="'+c.line+'"/><circle cx="44.5" cy="19" r="3" fill="'+c.skin+'" stroke="'+c.line+'"/>';
+ const front=shadow+(H.fb||'')+legsFB+armsFB+torsoFront(c)+head+H.f+face+glassesF;
+ const back=shadow+legsFB+armsFB+torsoBack(c)+ears+H.b;
+ const side='<ellipse cx="31" cy="66" rx="15" ry="4" fill="#355267" opacity=".25"/>'+
+  '<g class="leg leg-b"><rect x="27" y="45" width="9" height="18" rx="3" fill="'+c.legs+'"/><rect x="27" y="45" width="9" height="18" rx="3" fill="#000" opacity=".18"/><ellipse cx="34" cy="64" rx="6.5" ry="2.8" fill="'+c.shoes+'"/><ellipse cx="34" cy="64" rx="6.5" ry="2.8" fill="#000" opacity=".2"/></g>'+
+  '<g class="arm arm-b"><rect x="28" y="29" width="7" height="18" rx="3.5" fill="'+c.skin+'"/><rect x="28" y="29" width="7" height="18" rx="3.5" fill="#000" opacity=".15"/><rect x="28" y="28" width="7" height="8" rx="3" fill="'+sleeve+'"/></g>'+
+  '<g class="leg leg-a"><rect x="27" y="45" width="9" height="18" rx="3" fill="'+c.legs+'" stroke="#00000025" stroke-width=".8"/><ellipse cx="34" cy="64" rx="6.5" ry="2.8" fill="'+c.shoes+'" stroke="#00000045" stroke-width=".8"/></g>'+
+  torsoSide(c)+(H.sb||'')+
+  '<g class="arm arm-a"><rect x="28" y="29" width="7" height="19" rx="3.5" fill="'+c.skin+'" stroke="'+c.line+'" stroke-width="1.5"/><rect x="28" y="28" width="7" height="8" rx="3" fill="'+sleeve+'" stroke="'+c.topLine+'" stroke-width=".8"/></g>'+
+  '<ellipse cx="33" cy="17" rx="14" ry="15" fill="'+c.skin+'" stroke="'+c.line+'" stroke-width="1.5"/>'+H.s+
+  (H.sideEar===false?'':'<circle cx="28.5" cy="19" r="3" fill="'+c.skin+'" stroke="'+c.line+'" stroke-width="1"/>')+
+  '<circle cx="41" cy="18" r="2" fill="#252a33"/><circle cx="41.6" cy="17.4" r=".7" fill="#fff"/>'+(girl?'<path d="M42.6 16.3 L44 15" stroke="#252a33" stroke-width="1" stroke-linecap="round"/>':'')+
+  '<path d="M46 19 L48.5 22 L46 23" fill="'+c.skin+'" stroke="'+c.line+'" stroke-width="1"/><ellipse cx="38.5" cy="23.5" rx="2.4" ry="1.4" fill="#ff7b8a" opacity=".4"/><path d="M44 27 Q41 29 38 27" stroke="#9b543f" stroke-width="1.4" fill="none" stroke-linecap="round"/>'+
+  (c.glasses?'<g fill="none" stroke="#2b2b33" stroke-width="1.4"><circle cx="41" cy="18" r="4.2"/><path d="M36.8 17.5 L28 16.5"/></g>':'');
+ const VB='0 0 60 72';
+ return POSE_CACHE[c.id]={down:svgVB(front,VB),up:svgVB(back,VB),right:svgVB(side,VB),
+  left:svgVB('<g transform="translate(60 0) scale(-1 1)">'+side+'</g>',VB), // its own left-facing drawing; the map character is never rotated
+  avatar:svgVB('<rect x="-10" y="-10" width="80" height="80" fill="'+c.bg+'"/>'+front,'5 -5 50 50')};
+}
+const charById=id=>CHARACTERS.find(c=>c.id===id)||CHARACTERS[0];
+let currentChar=charById(store.get(K_CHAR));
+let POSES=posesOf(currentChar);
+const faceEl=$('facing'),charEl=$('character');let visiblePose='';
+function setPose(d){if(visiblePose===d)return;visiblePose=d;faceEl.innerHTML=POSES[d];const horiz=d==='left'||d==='right';charEl.classList.toggle('h',horiz);charEl.classList.toggle('v',!horiz);faceEl.setAttribute('aria-label',currentChar.name+' facing '+headingNames[d])}
+function applyCharacter(id){currentChar=charById(id);POSES=posesOf(currentChar);const d=visiblePose||facing;visiblePose='';setPose(d)}
+
+/* ================= MOVEMENT (V12) ================= */
+// Road centre lines in % of the map. They match the SVG exactly:
+// vertical roads x=200,400,600,800 and horizontal roads y=175,350,525 of the 1000x700 viewBox.
+const COLS=[20,40,60,80];                 // vertical roads
+const ROWS=[25,50,75];                    // horizontal roads
+const X_MIN=2,X_MAX=98,Y_MIN=3,Y_MAX=97;  // horizontal roads run to the left/right edges, vertical roads to the top/bottom edges
+const SEGMENT_SECONDS=3;                  // time to walk from one intersection to the next
+const SPEED_X=(COLS[1]-COLS[0])/SEGMENT_SECONDS,SPEED_Y=(ROWS[1]-ROWS[0])/SEGMENT_SECONDS;
+const ALIGN=0.05;                         // "exactly on the road line" tolerance (%)
+const TURN_ASSIST=0.4;                    // within 40% of a block from a corner, walk to the corner and turn there
+const headingNames={up:'north',right:'east',down:'south',left:'west'};
+const START_X=COLS[0],START_Y=95;
+let px=START_X,py=START_Y,facing='up',activeDirection=null,walking=false,lastFrame=0,segments=0,rafId=0;
+function renderWalker(){charEl.style.left=px+'%';charEl.style.top=py+'%';$('status').textContent='🚶🏻 Facing '+headingNames[facing]+' · '+segments+' blocks'}
+function resetWalker(){stopWalking();px=START_X;py=START_Y;facing='up';segments=0;visiblePose='';setPose('up');renderWalker()}
+function message(title,text){$('missionTitle').textContent=title;$('message').textContent=text}
+function setMode(m){
+ mode=m;document.querySelectorAll('.mode').forEach(b=>b.classList.toggle('active',b.dataset.mode===m));resetWalker();
+ if(m==='build')message('🏡 Build your town!','Select an object and choose one of the four spaces in any block.');
+ else if(m==='free')message('🧭 Free direction practice','Press once to face, then hold the same arrow to walk.');
+ else{
+  const choices=[];placements.forEach((block,i)=>block.forEach((item,j)=>{
+   if(item&&!(j>0&&isLandmarkBlock(block))&&!['Tree','Grass','Flowers','Rock','Pine tree','Cherry tree','Dog','Fox','Treasure'].includes(item[1]))choices.push({i,j,name:item[1]});
+  }));target=choices[Math.floor(Math.random()*choices.length)]||null;
+  if(target){message('⭐ Mission: Go to the '+target.name+'!','Walk to the road next to the '+target.name+'.');toast('⭐ Go to the '+target.name+'!');speak('Go to the '+target.name)}
+  else{message('Add places first!','Place a library or school before starting a mission.');toast('Add a place first!')}
+ }
+}
+function nearest(a,v){return a.reduce((b,x)=>Math.abs(x-v)<Math.abs(b-v)?x:b,a[0])}
+function checkMission(){
+ if(mode!=='mission'||!target)return;
+ const p=pos[target.i];
+ // Reach any road beside the target block (its green centre cannot be walked on).
+ const nearVertical=COLS.some(x=>Math.abs(px-x)<2.3)&&Math.abs(py-p.y)<12;
+ const nearHorizontal=ROWS.some(y=>Math.abs(py-y)<2.3)&&Math.abs(px-p.x)<10;
+ if(nearVertical||nearHorizontal){
+  message('🎉 Great job!','You found the '+target.name+'!');toast('⭐ Great job! You found the '+target.name+'!');speak('Great job! You found the '+target.name);target=null;
+ }
+}
+
+function stopWalking(){walking=false;activeDirection=null;lastFrame=0;if(rafId)cancelAnimationFrame(rafId);rafId=0;charEl.classList.remove('walking');if(visiblePose&&visiblePose!==facing)setPose(facing)}
+function startWalking(d){walking=true;activeDirection=d;lastFrame=0;charEl.classList.add('walking');rafId=requestAnimationFrame(walkFrame)}
+// Step 1: a NEW direction only turns the character (no movement).
+// Step 2: pressing/holding the direction you already face walks while held.
+function beginDirection(d){if(walking&&activeDirection===d)return;stopWalking();if(facing!==d){facing=d;setPose(d);renderWalker();speak(d==='up'?'Face up':d==='down'?'Face down':d==='left'?'Turn left':'Turn right');return}startWalking(d)}
+function blocked(msg){stopWalking();setPose(facing);toast(msg)}
+// Move along a road; returns the new value, or null when already at the end of the road.
+function moveAlong(cur,sign,speed,dt,min,max,crossLines){
+ const lim=sign>0?max:min;if(sign>0?cur>=lim-1e-6:cur<=lim+1e-6)return null;
+ const n=sign>0?Math.min(lim,cur+speed*dt):Math.max(lim,cur-speed*dt);
+ segments+=crossLines.filter(r=>sign>0?(cur<r&&n>=r):(cur>r&&n<=r)).length;return n;
+}
+function slideTo(cur,goal,speed,dt){const gap=goal-cur;return Math.abs(gap)<=speed*dt+ALIGN?goal:cur+Math.sign(gap)*speed*dt}
+function walkFrame(t){
+ if(!walking)return;
+ // The first frame only records the time (dt would be 0 here).
+ if(!lastFrame){lastFrame=t;rafId=requestAnimationFrame(walkFrame);return}
+ const dt=Math.min((t-lastFrame)/1000,.06);lastFrame=t;
+ const d=activeDirection,sign=(d==='down'||d==='right')?1:-1;
+ if(d==='up'||d==='down'){
+  const col=nearest(COLS,px),off=col-px;
+  if(Math.abs(off)<=ALIGN){px=col;setPose(d);const n=moveAlong(py,sign,SPEED_Y,dt,Y_MIN,Y_MAX,ROWS);if(n===null)return blocked('🚧 End of the road!');py=n}
+  else if(Math.abs(off)<=(COLS[1]-COLS[0])*TURN_ASSIST){setPose(off>0?'right':'left');px=slideTo(px,col,SPEED_X,dt)} // walk to the corner first
+  else return blocked('🚧 No road this way. Walk to a corner first!');
+ }else{
+  const row=nearest(ROWS,py),off=row-py;
+  if(Math.abs(off)<=ALIGN){py=row;setPose(d);const n=moveAlong(px,sign,SPEED_X,dt,X_MIN,X_MAX,COLS);if(n===null)return blocked('🚧 End of the road!');px=n}
+  else if(Math.abs(off)<=(ROWS[1]-ROWS[0])*TURN_ASSIST){setPose(off>0?'down':'up');py=slideTo(py,row,SPEED_Y,dt)}
+  else return blocked('🚧 No road this way. Walk to a corner first!');
+ }
+ renderWalker();checkMission();
+ if(walking)rafId=requestAnimationFrame(walkFrame);
+}
+
+/* ================= UI (unchanged except help text) ================= */
+function modal(title,body,ok){$('modaltitle').textContent=title;$('modaltext').textContent=body;$('modalbg').classList.add('show');$('modalcancel').style.display=ok?'':'none';$('modalok').onclick=()=>{$('modalbg').classList.remove('show');if(ok)ok()}}
+$('modalcancel').onclick=()=>$('modalbg').classList.remove('show');$('modalbg').onclick=e=>{if(e.target===$('modalbg'))$('modalbg').classList.remove('show')};
+$('help').onclick=()=>modal('How to play','BUILD MAP: Tap an object, then tap one of the four spaces in a green block — or drag the object straight onto a space. DIRECTION GAME: Press a new arrow once to face that direction. Then press and HOLD the same arrow to walk. Release to stop — you can stop anywhere. Walking from one intersection to the next takes about 3 seconds. To turn onto another road, hold the new arrow near a corner: the character walks to the corner and turns. SAVE stores your map in this browser. BIG PLACES: Zoo, Aquarium, Castle, Stadium and Amusement Park use a whole block. PANEL: press the blue ▶ tab to hide the right panel and play on a bigger map with the see-through arrows; press ◀ to bring it back. PROFILE: tap your picture to change your photo or nickname, and 👕 Choose Character to pick a new walker. Your photo, nickname and character are saved only in this browser.');
+$('sound').onclick=()=>{sound=!sound;$('sound').textContent=sound?'🔊 Sound On':'🔇 Sound Off'};
+$('lang').onclick=()=>{japanese=!japanese;const h=$('hint');h.classList.add('again');void h.offsetWidth;h.classList.remove('again');$('hint').textContent=japanese?'🏡 アイテムを選んで、４つのマスに置こう！':'🏡 Choose an object, then tap one of the 4 spaces in a block.';toast(japanese?'日本語のヒントを表示しています':'English hints enabled')};
+$('full').onclick=()=>{if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.()};
+
+/* ================= INPUT: hold to walk, release to stop ================= */
+const keyDirs={ArrowUp:'up',ArrowLeft:'left',ArrowRight:'right',ArrowDown:'down'};
+const buttons={up:$('straight'),left:$('turnleft'),right:$('turnright'),down:$('down')};
+// Both joysticks (panel + floating) call exactly the same movement functions: beginDirection / stopWalking.
+function wireDirButton(b,d){b.style.touchAction='none';
+ b.addEventListener('pointerdown',e=>{e.preventDefault();try{b.setPointerCapture(e.pointerId)}catch(_){}b.classList.add('pressed');beginDirection(d)});
+ const release=()=>{b.classList.remove('pressed');stopWalking()};
+ b.addEventListener('pointerup',release);b.addEventListener('pointercancel',release);b.addEventListener('lostpointercapture',release);
+ b.addEventListener('contextmenu',e=>e.preventDefault());b.addEventListener('selectstart',e=>e.preventDefault())}
+Object.entries(buttons).forEach(([d,b])=>wireDirButton(b,d));
+document.querySelectorAll('#floatPad .fp').forEach(b=>wireDirButton(b,b.dataset.dir));
+$('floatPad').addEventListener('contextmenu',e=>e.preventDefault());
+document.addEventListener('pointerup',stopWalking);window.addEventListener('pointercancel',stopWalking);
+const heldKeys=new Set();
+document.addEventListener('keydown',e=>{const d=keyDirs[e.key];if(!d)return;if(document.querySelector('.modalbg.show')||/^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName))return;e.preventDefault();if(heldKeys.has(e.key))return;heldKeys.add(e.key);beginDirection(d)});
+document.addEventListener('keyup',e=>{if(!keyDirs[e.key])return;e.preventDefault();heldKeys.delete(e.key);stopWalking()});
+window.addEventListener('blur',()=>{heldKeys.clear();stopWalking()});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){heldKeys.clear();stopWalking()}});
+
+/* ================= MODES / TOOLS / SAVE (unchanged) ================= */
+document.querySelectorAll('.mode').forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
+$('undo').onclick=()=>{if(!history.length)return toast('Nothing to undo');future.push(cloneMap(placements));placements=history.pop();drawPlots()};
+$('redo').onclick=()=>{if(!future.length)return toast('Nothing to redo');history.push(cloneMap(placements));placements=future.pop();drawPlots()};
+$('erase').onclick=()=>{erase=!erase;$('erase').textContent='🗑 Eraser: '+(erase?'On':'Off');drawInventory()};
+$('clear').onclick=()=>modal('Clear the map?','This removes all objects from the map. You can undo this action.',()=>{snapshot();placements=emptyMap();drawPlots();toast('Map cleared')});
+$('save').onclick=()=>{try{localStorage.setItem('pino_direction_map_v10',JSON.stringify(placements));toast('💾 Map saved on this browser!')}catch(e){toast('Unable to save in this browser')}};
+$('load').onclick=()=>{
+ try{
+  const latest=localStorage.getItem('pino_direction_map_v10');
+  const previous=localStorage.getItem('pino_direction_map_v9');
+  const legacy=localStorage.getItem('pino_direction_map_v1');
+  const data=latest||previous||legacy;if(!data)return toast('No saved map found');
+  const converted=convertMap(JSON.parse(data));if(!converted)return toast('Saved map format not recognized');
+  snapshot();placements=converted;drawPlots();toast(latest?'📂 Map loaded!':'📂 Older map imported safely!');
+ }catch(e){toast('Unable to load saved map')}
+};
+/* ================= DRAG AND DROP (V12) ================= */
+// Method B: press an object in the panel and drag it onto one of the 4 spaces of a green block.
+// Mouse: drag starts after moving 6px. Touch: drag starts after a sideways move or a short press-and-hold;
+// an up/down swipe still scrolls the panel and never places anything.
+let drag=null,suppressClick=false;
+const inv=$('inventory');
+function clearDropTarget(){if(drag&&drag.cell){drag.cell.classList.remove('drop-target');const bl=drag.cell.closest('.townblock');bl&&bl.classList.remove('drop-block','big');drag.cell=null}}
+function endDrag(){if(!drag)return;clearTimeout(drag.timer);clearDropTarget();if(drag.ghost)drag.ghost.remove();document.body.classList.remove('dragging');drag=null}
+function startDrag(x,y){
+ if(!drag||drag.active)return;clearTimeout(drag.timer);drag.active=true;
+ const g=document.createElement('div');g.className='drag-ghost'+(drag.type==='mouse'?'':' touch');
+ g.innerHTML='<span class="e"></span><span></span>';if(ART[drag.item[1]])g.firstChild.innerHTML=ART[drag.item[1]];else g.firstChild.textContent=drag.item[0];g.lastChild.textContent=drag.item[1];
+ document.body.append(g);drag.ghost=g;document.body.classList.add('dragging');moveDrag(x,y);
+}
+function cellAt(x,y){const el=document.elementFromPoint(x,y);return el&&el.closest?el.closest('.towncell'):null}
+function moveDrag(x,y){
+ drag.ghost.style.left=x+'px';drag.ghost.style.top=y+'px';
+ const cell=cellAt(x,y);
+ if(cell!==drag.cell){clearDropTarget();if(cell){cell.classList.add('drop-target');drag.cell=cell;const bl=cell.closest('.townblock'),big=LANDMARKS.has(drag.item[1]);if(bl&&(big||bl.classList.contains('landmark'))){bl.classList.add('drop-block');bl.classList.toggle('big',big)}}}
+ drag.ghost.classList.toggle('bad',!cell);
+}
+function dropAt(x,y){
+ const cell=cellAt(x,y),item=drag.item;suppressClick=true;setTimeout(()=>suppressClick=false,0);endDrag();
+ if(!cell){toast('Drop it on one of the 4 spaces in a green block.');return}
+ if(mode==='mission'){toast('Use the direction buttons to travel!');return}
+ const i=+cell.dataset.b,j=+cell.dataset.c;
+ selected=item[1];erase=false;$('erase').textContent='🗑 Eraser: Off';drawInventory();
+ placeAt(i,j,item);
+}
+inv.addEventListener('pointerdown',e=>{
+ const tile=e.target.closest('.tile');if(!tile||(e.pointerType==='mouse'&&e.button!==0))return;
+ endDrag();
+ drag={item:itemByName(tile.dataset.name),x0:e.clientX,y0:e.clientY,id:e.pointerId,type:e.pointerType,active:false,ghost:null,cell:null,timer:0};
+ if(e.pointerType!=='mouse'){const x=e.clientX,y=e.clientY;drag.timer=setTimeout(()=>startDrag(x,y),300)}
+});
+window.addEventListener('pointermove',e=>{
+ if(!drag||e.pointerId!==drag.id)return;
+ if(!drag.active){
+  const dx=e.clientX-drag.x0,dy=e.clientY-drag.y0;
+  if(Math.hypot(dx,dy)<(drag.type==='mouse'?6:10))return;
+  if(drag.type!=='mouse'&&Math.abs(dy)>Math.abs(dx)){endDrag();return} // vertical swipe = scroll the panel
+  startDrag(e.clientX,e.clientY);
+ }
+ moveDrag(e.clientX,e.clientY);
+});
+window.addEventListener('pointerup',e=>{if(!drag||e.pointerId!==drag.id)return;if(drag.active)dropAt(e.clientX,e.clientY);else endDrag()});
+window.addEventListener('pointercancel',e=>{if(drag&&e.pointerId===drag.id)endDrag()});
+inv.addEventListener('touchmove',e=>{if(drag&&drag.active&&e.cancelable)e.preventDefault()},{passive:false}); // no panel scrolling mid-drag
+inv.addEventListener('contextmenu',e=>{if(drag)e.preventDefault()});
+window.addEventListener('click',e=>{if(suppressClick){e.stopPropagation();e.preventDefault();suppressClick=false}},true);
+window.addEventListener('keydown',e=>{if(e.key==='Escape'&&drag)endDrag()});
+
+/* ================= COLLAPSIBLE RIGHT PANEL (V14) ================= */
+// Only the panel is hidden. The map keeps its 1000x700 coordinate system and is simply drawn bigger,
+// so the character's logical position (px,py), roads, blocks and collision never change.
+const K_PANEL='pino_city_panel_hidden',appEl=document.querySelector('.app');
+function setPanelHidden(hide,instant){
+ if(instant){appEl.classList.add('notrans');setTimeout(()=>appEl.classList.remove('notrans'),50)}
+ appEl.classList.toggle('panel-hidden',hide);
+ const t=$('panelToggle');t.setAttribute('aria-expanded',String(!hide));
+ t.setAttribute('aria-label',hide?'Show the right panel':'Hide the right panel');t.title=hide?'Show the panel / パネルを出す':'Hide the panel / パネルをかくす';
+ $('sidePanel').setAttribute('aria-hidden',String(hide));store.set(K_PANEL,hide?'1':'0');
+}
+$('panelToggle').onclick=()=>setPanelHidden(!appEl.classList.contains('panel-hidden'));
+if(store.get(K_PANEL)==='1')setPanelHidden(true,true);
+
+/* ================= STUDENT PROFILE, PHOTO, CHARACTER PICKER, WELCOME (V13) ================= */
+// Everything here is stored only in this browser (localStorage). Nothing is uploaded anywhere.
+const MAX_NAME=20;
+const cleanName=v=>Array.from(String(v||'').replace(/[\u0000-\u001f\u007f<>]/g,'').trim()).slice(0,MAX_NAME).join('').trim();
+const validPhoto=p=>typeof p==='string'&&/^data:image\/(png|webp|jpeg);base64,[A-Za-z0-9+/=]+$/.test(p);
+const profile={name:cleanName(store.get(K_NAME)),photo:validPhoto(store.get(K_PHOTO))?store.get(K_PHOTO):null,char:currentChar.id};
+let pmode=null,wstep=0,draft={name:'',photo:null,char:'pino'},stream=null,camFacing='user',shot=null,shotSource='camera',previewDir=0,previewTimer=0,storageWarned=false;
+function fillAvatar(el,photo,charId){el.textContent='';if(photo){const i=new Image();i.alt='';i.src=photo;el.append(i)}else el.innerHTML=posesOf(charById(charId)).avatar}
+function renderHeader(){
+ fillAvatar($('avatar'),profile.photo,profile.char);
+ const n=profile.name||'Player';$('playerName').textContent=n;
+ $('avatarBtn').setAttribute('aria-label','Profile picture of '+n+'. Click to change it.');
+ $('charBtn').title='Your character: '+currentChar.name;
+}
+/* ---------- character picker ---------- */
+const PREVIEW_DIRS=['down','right','up','left'];
+function buildCharGrid(){
+ CHARACTERS.forEach(c=>{
+  const b=document.createElement('button');b.type='button';b.className='charcard';b.dataset.id=c.id;b.setAttribute('role','radio');b.setAttribute('aria-label',c.name);
+  b.innerHTML=posesOf(c).down;const n=document.createElement('span');n.textContent=c.name;b.append(n);
+  b.onclick=()=>pickChar(c.id);$(c.g==='boy'?'gridBoys':'gridGirls').append(b);
+ });
+}
+function showPreviewPose(){
+ const d=PREVIEW_DIRS[previewDir%4],el=$('pcharBig'),h=d==='left'||d==='right';
+ el.querySelector('.person').innerHTML=posesOf(charById(draft.char))[d];el.classList.toggle('h',h);el.classList.toggle('v',!h);
+}
+function startPreview(){clearInterval(previewTimer);previewDir=0;showPreviewPose();previewTimer=setInterval(()=>{previewDir++;showPreviewPose()},1600)}
+function pickChar(id){
+ draft.char=charById(id).id;
+ document.querySelectorAll('.charcard').forEach(b=>{const on=b.dataset.id===draft.char;b.classList.toggle('sel',on);b.setAttribute('aria-checked',String(on))});
+ const c=charById(draft.char),P=posesOf(c);$('pcharName').textContent=c.name;
+ $('miniPoses').innerHTML=['down','left','up','right'].map(d=>'<div class="mp" title="'+d+'">'+P[d]+'</div>').join('');
+ showPreviewPose();if(!draft.photo)fillAvatar($('photoPreview'),null,draft.char);
+}
+/* ---------- photo: camera or upload, cropped to a circle ---------- */
+function photoMsg(t,ok){const m=$('photoMsg');m.textContent=t||'';m.classList.toggle('ok',!!ok)}
+function photoView(state){ // main | live | shot
+ $('photoPreview').hidden=state==='live';$('camWrap').hidden=state!=='live';
+ $('photoMain').hidden=state!=='main';$('camControls').hidden=state==='main';
+ $('camSelect').hidden=state!=='live';$('btnCapture').hidden=state!=='live';
+ $('btnRetake').hidden=state!=='shot';$('btnPhotoOK').hidden=state!=='shot';
+ $('btnRetake').textContent=shotSource==='file'?'🔄 Choose Another':'🔄 Retake';
+ if(state==='main')fillAvatar($('photoPreview'),draft.photo,draft.char);
+}
+function stopCam(){if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}const v=$('camVideo');if(v)v.srcObject=null}
+function camError(e){
+ stopCam();photoView('main');
+ const n=e&&e.name;let t;
+ if(n==='NotAllowedError'||n==='SecurityError')t='📷 Camera permission was not allowed. You can upload a photo instead. / カメラが使えません。しゃしんをアップロードしてね。';
+ else if(n==='NotFoundError'||n==='OverconstrainedError'||n==='DevicesNotFoundError')t='📷 No camera was found. You can upload a photo instead. / カメラが見つかりません。';
+ else if(n==='NotReadableError'||n==='TrackStartError')t='📷 The camera is busy in another app. Close it and try again, or upload a photo.';
+ else t='📷 The camera is not available here. You can upload a photo instead.';
+ photoMsg(t);const u=$('btnUpload');u.classList.remove('pulse');void u.offsetWidth;u.classList.add('pulse');
+}
+async function getStream(mode){
+ const size={width:{ideal:720},height:{ideal:720}};
+ if(mode!=='environment')return {s:await navigator.mediaDevices.getUserMedia({video:Object.assign({facingMode:'user'},size),audio:false}),exact:true}; // laptops: any camera is fine
+ try{return {s:await navigator.mediaDevices.getUserMedia({video:Object.assign({facingMode:{exact:mode}},size),audio:false}),exact:true}}
+ catch(e){
+  if(e.name!=='OverconstrainedError'&&e.name!=='NotFoundError'&&e.name!=='TypeError')throw e;
+  return {s:await navigator.mediaDevices.getUserMedia({video:Object.assign({facingMode:mode},size),audio:false}),exact:false};
+ }
+}
+async function startCam(){
+ photoMsg('');shotSource='camera';
+ if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){camError({name:'Unsupported'});return}
+ stopCam();$('camSelect').value=camFacing;photoView('live');photoMsg('Starting the camera… / カメラをじゅんびしています',true);
+ const mode=pmode;let r;
+ try{r=await getStream(camFacing)}catch(e){camError(e);return}
+ if(pmode!==mode||$('camWrap').hidden){r.s.getTracks().forEach(t=>t.stop());return} // popup closed while waiting
+ stream=r.s;const v=$('camVideo'),track=stream.getVideoTracks()[0],set=track&&track.getSettings?track.getSettings():{};
+ v.classList.toggle('mirror',(set.facingMode||(r.exact?camFacing:'user'))!=='environment');
+ v.srcObject=stream;try{await v.play()}catch(_){}
+ track&&track.addEventListener('ended',()=>{if(!$('camWrap').hidden)camError({name:'NotReadableError'})});
+ photoMsg(r.exact?'':'No back camera was found, so the front camera is used. / うしろのカメラが見つかりません。');
+ try{const cams=(await navigator.mediaDevices.enumerateDevices()).filter(d=>d.kind==='videoinput');const sel=$('camSelect');sel.disabled=cams.length<2;sel.title=cams.length<2?'Only one camera was found on this device':''}catch(_){}
+}
+function cropCircle(src,w,h,mirror){
+ const size=Math.min(w,h),sx=(w-size)/2,sy=(h-size)/2,c=document.createElement('canvas'),S=256;c.width=c.height=S;
+ const g=c.getContext('2d');g.beginPath();g.arc(S/2,S/2,S/2,0,Math.PI*2);g.closePath();g.clip();
+ if(mirror){g.translate(S,0);g.scale(-1,1)}
+ g.drawImage(src,sx,sy,size,size,0,0,S,S);
+ let url=c.toDataURL('image/webp',.86);if(!url.startsWith('data:image/webp'))url=c.toDataURL('image/png');return url;
+}
+function capture(){
+ const v=$('camVideo');if(!v.videoWidth){photoMsg('The camera is still starting. Try again in a moment.');return}
+ shot=cropCircle(v,v.videoWidth,v.videoHeight,v.classList.contains('mirror'));stopCam();
+ photoView('shot');fillAvatar($('photoPreview'),shot,draft.char);photoMsg('Do you like it? Press ✅ Confirm. / これでいい？',true);
+}
+function loadFile(file){
+ if(!file)return;
+ if(!/^image\//.test(file.type)){photoMsg('Please choose a picture file (JPG or PNG).');return}
+ if(file.size>25*1024*1024){photoMsg('That picture is too big. Please choose a smaller one.');return}
+ stopCam();const url=URL.createObjectURL(file),img=new Image();
+ img.onload=()=>{try{shot=cropCircle(img,img.naturalWidth,img.naturalHeight,false);shotSource='file';photoView('shot');fillAvatar($('photoPreview'),shot,draft.char);photoMsg('Do you like it? Press ✅ Confirm. / これでいい？',true)}catch(e){photoMsg('Sorry, that picture could not be used.')}URL.revokeObjectURL(url)};
+ img.onerror=()=>{URL.revokeObjectURL(url);photoView('main');photoMsg('Sorry, that picture could not be opened. Try a JPG or PNG.')};
+ img.src=url;
+}
+$('btnTake').onclick=startCam;
+$('btnUpload').onclick=()=>{$('fileInput').value='';$('fileInput').click()};
+$('fileInput').onchange=e=>loadFile(e.target.files&&e.target.files[0]);
+$('btnDefault').onclick=()=>{draft.photo=null;shot=null;photoView('main');photoMsg('Your character will be your picture. 🙂',true);if(pmode==='welcome')renderWelcome()};
+$('btnCapture').onclick=capture;
+$('btnRetake').onclick=()=>{if(shotSource==='file'){$('fileInput').value='';$('fileInput').click()}else startCam()};
+$('btnPhotoOK').onclick=()=>{if(!shot)return;draft.photo=shot;shot=null;photoView('main');photoMsg('Photo ready! ✅',true);if(pmode==='welcome')renderWelcome()};
+$('btnCamCancel').onclick=()=>{stopCam();shot=null;photoView('main');photoMsg('')};
+$('camSelect').onchange=e=>{camFacing=e.target.value==='environment'?'environment':'user';startCam()};
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&stream)$('btnCamCancel').onclick()});
+/* ---------- name ---------- */
+function updateCount(){const i=$('nameInput'),a=Array.from(i.value);if(a.length>MAX_NAME)i.value=a.slice(0,MAX_NAME).join('');$('nameCount').textContent=Array.from(i.value).length+'/'+MAX_NAME;$('nameMsg').textContent=''}
+$('nameInput').addEventListener('input',updateCount);
+$('nameInput').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();const b=$('pactions').lastChild;b&&b.click()}});
+function readName(){const n=cleanName($('nameInput').value);if(!n){$('nameMsg').textContent='Please type a nickname. / ニックネームを入れてね。';$('nameInput').focus();return null}return n}
+/* ---------- popup control ---------- */
+function showPanes(list){['paneName','panePhoto','paneChar'].forEach(id=>$(id).hidden=!list.includes(id))}
+function setActions(list){const a=$('pactions');a.textContent='';list.forEach(([label,fn,cls])=>{const b=document.createElement('button');b.type='button';b.className='btn'+(cls?' '+cls:'');b.textContent=label;b.onclick=fn;a.append(b)})}
+function heading(t,sub){$('ptitle').textContent=t;$('psub').textContent=sub}
+function openPanel(mode){
+ pmode=mode;draft={name:profile.name,photo:profile.photo,char:profile.char};shot=null;shotSource='camera';
+ $('nameInput').value=draft.name;updateCount();photoMsg('');photoView('main');pickChar(draft.char);clearInterval(previewTimer);
+ $('pbg').classList.add('show');$('steps').hidden=mode!=='welcome';
+ if(mode==='welcome'){wstep=0;renderWelcome();return}
+ if(mode==='profile'){heading('🙂 My Profile','Change your picture or nickname. / しゃしんとニックネームをかえられるよ。');showPanes(['panePhoto','paneName']);setActions([['Cancel',closePanel],['💾 Save',saveProfile,'primary']])}
+ else{heading('👕 Choose Your Character','Pick one friend to walk around your city! / キャラクターをえらぼう！');showPanes(['paneChar']);startPreview();setActions([['Cancel',closePanel],['✅ Confirm',confirmChar,'primary']])}
+}
+function renderWelcome(){
+ [...$('steps').children].forEach((x,i)=>x.classList.toggle('on',i<=wstep));clearInterval(previewTimer);
+ if(wstep===0){
+  heading('🏙️ Welcome to My City!',"Let's build a town and practice directions in English! / 英語で道案内をしよう！");showPanes(['paneName']);
+  setActions([['Next ➜',()=>{const n=readName();if(!n)return;draft.name=n;wstep=1;renderWelcome()},'primary']]);setTimeout(()=>$('nameInput').focus(),50);
+ }else if(wstep===1){
+  heading('📷 Profile Picture (optional)','Take a photo, upload one, or just use your character. / しゃしんはなくてもOK！');showPanes(['panePhoto']);
+  setActions([['⬅ Back',()=>{stopCam();photoView('main');wstep=0;renderWelcome()}],[draft.photo?'Next ➜':'Skip ➜',()=>{stopCam();photoView('main');photoMsg('');wstep=2;renderWelcome()},'primary']]);
+ }else{
+  heading('🧒 Choose Your Character','Pick one friend to walk around your city! / キャラクターをえらぼう！');showPanes(['paneChar']);startPreview();
+  setActions([['⬅ Back',()=>{wstep=1;renderWelcome()}],['🚀 Start Adventure!',startAdventure,'bigbtn']]);
+ }
+}
+function closePanel(){stopCam();shot=null;clearInterval(previewTimer);pmode=null;$('pbg').classList.remove('show')}
+function commitProfile(){
+ let ok=store.set(K_NAME,draft.name)&&store.set(K_CHAR,draft.char);
+ if(draft.photo!==profile.photo){if(draft.photo){if(!store.set(K_PHOTO,draft.photo)){ok=false;toast('⚠️ The photo could not be saved in this browser. It will show until you reload.')}}else store.del(K_PHOTO)}
+ profile.name=draft.name;profile.photo=draft.photo;profile.char=draft.char;
+ applyCharacter(profile.char);renderHeader();
+ if(!ok&&!storageWarned){storageWarned=true;setTimeout(()=>toast('⚠️ This browser cannot save settings. They will reset when the page reloads.'),2500)}
+}
+function saveProfile(){const n=readName();if(!n)return;draft.name=n;commitProfile();closePanel();toast('💾 Profile saved!')}
+function confirmChar(){commitProfile();closePanel();toast('👕 You are now '+currentChar.name+'!');speak('Hi! I am '+currentChar.name)}
+function startAdventure(){commitProfile();store.set(K_SETUP,'1');closePanel();toast('🎉 Welcome, '+profile.name+'!');speak('Welcome to my city, '+profile.name+'!')}
+$('pbg').addEventListener('click',e=>{if(e.target===$('pbg')&&pmode&&pmode!=='welcome')closePanel()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&pmode&&pmode!=='welcome')closePanel()});
+$('avatarBtn').onclick=()=>openPanel('profile');
+$('nameBtn').onclick=()=>{openPanel('profile');setTimeout(()=>{$('nameInput').focus();$('nameInput').select()},50)};
+$('charBtn').onclick=()=>openPanel('character');
+buildCharGrid();renderHeader();
+if(store.get(K_SETUP)!=='1'||!profile.name)setTimeout(()=>openPanel('welcome'),0);
+
+drawTabs();drawInventory();drawPlots();resetWalker();})();
+</script></body></html>
