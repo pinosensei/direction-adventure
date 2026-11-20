@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Direction Adventure Teacher</title>
+<style>
+:root{--blue:#0967c9;--dark:#11477f;--line:#c3e5ff;--bg1:#79caff;--bg2:#d5f6ff;--card:#fff;--ink:#173b60;--muted:#4a7194;--ok:#2fbf4a;--off:#b9c4cf;--warn:#c62828}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{font-family:'Trebuchet MS',Arial,'Hiragino Sans','Yu Gothic',sans-serif;background:linear-gradient(var(--bg1),var(--bg2));background-attachment:fixed;color:var(--ink)}
+button,input{font-family:inherit}
+.top{display:flex;align-items:center;gap:10px;padding:12px 16px;background:#ffffffd9;box-shadow:0 2px 10px #0001;position:sticky;top:0;z-index:5;flex-wrap:wrap}
+.top h1{margin:0;font-size:20px;color:var(--dark);flex:1;min-width:200px}
+.top h1 small{display:block;font-size:12px;color:var(--muted);font-weight:normal}
+.who{font-size:12px;color:var(--muted);max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.btn{border:2px solid var(--line);background:#fff;color:var(--dark);border-radius:12px;padding:8px 14px;font-weight:bold;font-size:14px;cursor:pointer;box-shadow:0 3px 0 #9bc8e8}
+.btn:hover{transform:translateY(-1px)}.btn:active{transform:translateY(2px);box-shadow:none}
+.btn:disabled{opacity:.5;cursor:default;transform:none}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff;box-shadow:0 3px 0 #064a91}
+.btn.danger{background:#ffe3e0;color:#b3261e;border-color:#f3a59c;box-shadow:0 3px 0 #e28b80}
+.btn.small{padding:4px 9px;font-size:12px}
+main{max-width:1100px;margin:0 auto;padding:18px 16px 40px}
+.card{background:var(--card);border-radius:20px;padding:20px;box-shadow:0 6px 24px #0b3d6b22;border:3px solid #c9e5ff}
+.narrow{max-width:420px;margin:30px auto}
+h2{margin:0 0 12px;color:var(--dark)}
+label{display:block;font-weight:bold;margin:12px 0 5px}
+input[type=email],input[type=password],input[type=text]{width:100%;padding:11px 12px;border:2px solid var(--line);border-radius:12px;font-size:16px;color:var(--ink)}
+input:focus{outline:3px solid #1376db55;border-color:var(--blue)}
+.msg{min-height:22px;margin-top:10px;font-weight:bold}
+.msg.err{color:var(--warn)}
+.row{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}
+.row>*{flex:1}
+.row .btn{flex:none}
+.list{display:grid;gap:10px;margin-top:6px}
+.cls{display:flex;align-items:center;gap:12px;padding:12px 14px;border:2px solid var(--line);border-radius:14px;background:#f8fcff}
+.cls b{font-size:17px;flex:1}
+.cls code{font-size:20px;letter-spacing:3px;font-weight:bold;color:var(--blue)}
+.muted{color:var(--muted);font-size:13px}
+.roomhead{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.bigcode{font-size:52px;font-weight:bold;letter-spacing:10px;color:var(--blue);line-height:1}
+.roomhead .name{font-size:22px;font-weight:bold}
+.stages{display:flex;gap:6px;flex-wrap:wrap;margin:16px 0 4px}
+.stage{padding:6px 12px;border-radius:999px;background:#eef6ff;color:#8aa6c0;font-size:13px;font-weight:bold;border:2px solid transparent}
+.stage.on{background:#fff3c4;color:#8a5a00;border-color:#ffb92e}
+.counts{display:flex;gap:14px;flex-wrap:wrap;margin:14px 0}
+.count{background:#f0f8ff;border-radius:14px;padding:8px 14px;font-weight:bold}
+.count span{font-size:24px;color:var(--blue);margin-right:4px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
+.stu{position:relative;border:2px solid var(--line);border-radius:14px;padding:10px 12px;background:#fff;display:flex;gap:10px;align-items:center}
+.stu.offline{opacity:.6;background:#f6f8fa}
+.seat{font-size:26px;font-weight:bold;color:var(--blue);min-width:38px;text-align:center}
+.stu .nm{font-weight:bold;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stu .sub{font-size:12px;color:var(--muted)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--ok);margin-right:4px}
+.dot.off{background:var(--off)}
+.stu .x{position:absolute;top:4px;right:4px;border:0;background:none;color:#b3261e;font-size:15px;cursor:pointer;padding:2px 6px;border-radius:8px}
+.stu .x:hover{background:#ffe3e0}
+.empty{padding:22px;text-align:center;color:var(--muted);border:2px dashed var(--line);border-radius:14px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.dlg{position:fixed;inset:0;background:#001d43a6;display:none;align-items:center;justify-content:center;padding:16px;z-index:20}
+.dlg.show{display:flex}
+.dlg .card{max-width:420px;width:100%}
+.dlg p{font-size:15px;line-height:1.5}
+.proj{position:fixed;inset:0;background:linear-gradient(#0967c9,#11477f);color:#fff;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;z-index:15;padding:20px}
+.proj.show{display:flex}
+.proj .pcode{font-size:min(26vw,220px);font-weight:bold;letter-spacing:.08em;line-height:1;text-shadow:0 6px 0 #0005}
+.proj .pname{font-size:min(6vw,40px);font-weight:bold;margin-bottom:10px}
+.proj .phow{font-size:min(4vw,26px);margin-top:18px;line-height:1.5}
+.proj .pcount{font-size:min(4vw,24px);margin-top:16px;background:#ffffff26;border-radius:999px;padding:6px 18px}
+.proj .btn{position:absolute;top:16px;right:16px}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(120px);background:var(--dark);color:#fff;padding:12px 20px;border-radius:14px;font-weight:bold;transition:transform .25s;z-index:30;max-width:calc(100% - 32px)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+[hidden]{display:none!important}
+@media(max-width:600px){.bigcode{font-size:40px;letter-spacing:6px}.top h1{font-size:17px}}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){}}
+</style></head>
+<body>
+<div class="top">
+ <h1><span data-t="title"></span><small data-t="subtitle"></small></h1>
+ <span class="who" id="who"></span>
+ <button class="btn small" id="langBtn" type="button"></button>
+ <button class="btn small" id="signOut" type="button" hidden data-t="signOut"></button>
+</div>
+<main>
+ <section id="vLoading" class="card narrow"><p data-t="loading"></p></section>
+
+ <section id="vSignIn" class="card narrow" hidden>
+  <h2 data-t="signInTitle"></h2>
+  <form id="signInForm">
+   <label for="email" data-t="email"></label><input id="email" type="email" autocomplete="username" required>
+   <label for="password" data-t="password"></label><input id="password" type="password" autocomplete="current-password" required>
+   <div class="actions"><button class="btn primary" type="submit" id="signInBtn" data-t="signIn"></button></div>
+   <div class="msg" id="signInMsg" aria-live="polite"></div>
+  </form>
+ </section>
+
+ <section id="vNotTeacher" class="card narrow" hidden>
+  <h2 data-t="notTeacherTitle"></h2><p data-t="notTeacherText"></p>
+ </section>
+
+ <section id="vClasses" hidden>
+  <div class="card">
+   <h2 data-t="newClass"></h2>
+   <form id="createForm" class="row">
+    <div><label for="newName" data-t="className"></label><input id="newName" type="text" maxlength="40" autocomplete="off"></div>
+    <button class="btn primary" type="submit" id="createBtn" data-t="create"></button>
+   </form>
+   <div class="msg" id="createMsg" aria-live="polite"></div>
+  </div>
+  <div class="card" style="margin-top:16px">
+   <h2 data-t="myClasses"></h2>
+   <div class="list" id="classList"></div>
+  </div>
+ </section>
+
+ <section id="vRoom" hidden>
+  <div class="card">
+   <div class="roomhead">
+    <button class="btn small" id="backBtn" type="button" data-t="back"></button>
+    <div><div class="muted" data-t="codeLabel"></div><div class="bigcode" id="rCode"></div></div>
+    <div style="flex:1"><div class="muted" data-t="className"></div><div class="name" id="rName"></div></div>
+    <button class="btn" id="projBtn" type="button" data-t="projector"></button>
+   </div>
+   <div class="stages" id="stages"></div>
+   <div class="counts">
+    <div class="count"><span id="nJoined">0</span><b data-t="joined"></b></div>
+    <div class="count"><span id="nOnline">0</span><b data-t="online"></b></div>
+   </div>
+   <div class="grid" id="students"></div>
+   <div id="removedBox" hidden><h3 class="muted" style="margin:18px 0 8px" data-t="removedTitle"></h3><div class="list" id="removedList"></div></div>
+   <div class="actions">
+    <button class="btn danger" id="closeBtn" type="button" data-t="closeClass"></button>
+   </div>
+   <p class="muted" data-t="nextPhase"></p>
+  </div>
+ </section>
+</main>
+
+<div class="proj" id="proj" role="dialog" aria-modal="true">
+ <button class="btn" id="projClose" type="button" data-t="closeView"></button>
+ <div class="pname" id="pName"></div>
+ <div class="pcode" id="pCode"></div>
+ <div class="phow">Open Direction Adventure → 🏫 Join Class → type the code<br>Direction Adventure をひらく → 🏫 クラスに参加 → コードを入れる</div>
+ <div class="pcount" id="pCount"></div>
+</div>
+
+<div class="dlg" id="dlg"><div class="card" role="dialog" aria-modal="true" aria-labelledby="dlgTitle">
+ <h2 id="dlgTitle"></h2><p id="dlgText"></p>
+ <div class="actions"><button class="btn" id="dlgNo" type="button"></button><button class="btn danger" id="dlgYes" type="button"></button></div>
+</div></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script type="module">
+const FB_CDN='https://www.gstatic.com/firebasejs/10.12.2/';
+const $=id=>document.getElementById(id);
+const CHAR_NAMES={pino:'Patrick',kenta:'Kenta',leo:'Leo',sora:'Sora',riku:'Riku',hana:'Hana',yuki:'Yuki',mia:'Mia',emi:'Emi',rin:'Rin'};
+const STAGES=['lobby','building','locked','pairing','exploring','finished'];
+
+/* ---------- language (teacher's own choice, separate from the students' setting) ---------- */
+const K_TLANG='pino_teacher_lang';
+let LANG=(()=>{try{return localStorage.getItem(K_TLANG)}catch(e){return null}})()||((navigator.language||'').startsWith('ja')?'ja':'en');
+const T={
+ title:['Direction Adventure · Teacher','Direction Adventure · 先生用'],
+ subtitle:['Classroom host portal','クラス管理ページ'],
+ loading:['Loading…','読みこみ中…'],
+ signInTitle:['Teacher sign-in','先生ログイン'],
+ email:['Email','メールアドレス'], password:['Password','パスワード'],
+ signIn:['Sign in','ログイン'], signOut:['Sign out','ログアウト'],
+ notTeacherTitle:['Not a teacher account','先生のアカウントではありません'],
+ notTeacherText:['This account is signed in, but it is not on the teacher list. Ask the site owner to add it, then sign in again.','ログインはできましたが、先生リストに登録されていません。管理者に登録してもらってから、もう一度ログインしてください。'],
+ newClass:['Create a class','クラスをつくる'], className:['Class name','クラス名'], create:['➕ Create','➕ つくる'],
+ myClasses:['My classes','わたしのクラス'], open:['Open','ひらく'], noClasses:['No classes yet. Create one above.','まだクラスがありません。上でつくってください。'],
+ closedEntry:['(closed)','（終了）'], removeEntry:['Remove from list','リストから消す'],
+ back:['← Classes','← クラス一覧'], codeLabel:['Class code','クラスコード'], projector:['📽️ Projector view','📽️ プロジェクター表示'],
+ joined:['joined','人 参加'], online:['online','人 オンライン'],
+ noStudents:['No students yet. Show the code and ask students to tap 🏫 Join Class.','まだだれも参加していません。コードを見せて、🏫「クラスに参加」をおしてもらいましょう。'],
+ closeClass:['🗑 Close class','🗑 クラスを終了'], closeView:['✖ Close','✖ とじる'],
+ nextPhase:['Building, timer and pairs are added in the next phases.','まちづくり・タイマー・ペアは次のフェーズで追加されます。'],
+ st_lobby:['Lobby','受付中'], st_building:['Building','まちづくり'], st_locked:['Time’s up','時間切れ'], st_pairing:['Pairs','ペア'], st_exploring:['Exploring','道案内'], st_finished:['Finished','終了'],
+ seat:['Seat','番'], removeQ:['Remove this student?','この児童を退出させますか？'],
+ removeText:['Seat {s} · {n} will be taken out of the class and the seat number becomes free. They cannot join again until you press “Allow back”.','{s}番 {n} さんをクラスから退出させ、出席番号をあけます。「もどす」をおすまで、もう一度参加できません。'],
+ removedTitle:['Removed students','退出させた児童'], allowBack:['Allow back','もどす'], allowed:['Allowed back. They can join again with the code.','もどしました。コードでもう一度参加できます。'],
+ remove:['Remove','退出させる'], cancel:['Cancel','キャンセル'],
+ closeQ:['Close this class?','このクラスを終了しますか？'],
+ closeText:['All students leave the class and the code stops working. Students keep everything saved on their own devices.','全員がクラスからぬけ、コードは使えなくなります。児童の端末に保存したデータは消えません。'],
+ closeYes:['Close class','終了する'],
+ closed:['Class closed.','クラスを終了しました。'], removed:['Student removed.','退出させました。'],
+ created:['Class created. Code: ','クラスをつくりました。コード: '],
+ needName:['Please type a class name.','クラス名を入れてください。'],
+ errAuth:['Email or password is not correct.','メールアドレスかパスワードがちがいます。'],
+ errMany:['Too many tries. Wait a few minutes and try again.','ためしすぎです。数分まってから、もう一度ためしてください。'],
+ errNet:['Could not connect. Check the internet.','接続できません。インターネットを確かめてください。'],
+ errConfig:['Firebase is not set up yet: paste the project settings into firebase-config.js.','Firebase の設定がまだです。firebase-config.js にプロジェクトの設定を貼りつけてください。'],
+ errGeneric:['Something went wrong: ','エラーが発生しました: '],
+ roomGone:['This class was closed.','このクラスは終了しました。'],
+ pCount:['{n} joined','{n}人 参加'], langBtn:['🌐 日本語','🌐 English']
+};
+const t=(k,vars)=>{let v=(T[k]||[k,k])[LANG==='ja'?1:0];if(vars)for(const x in vars)v=v.split('{'+x+'}').join(vars[x]);return v};
+function applyLang(){
+ document.documentElement.lang=LANG;
+ document.querySelectorAll('[data-t]').forEach(el=>el.textContent=t(el.dataset.t));
+ $('langBtn').textContent=t('langBtn');
+ if(view==='room')renderRoom();if(view==='classes')renderClasses();
+}
+$('langBtn').onclick=()=>{LANG=LANG==='ja'?'en':'ja';try{localStorage.setItem(K_TLANG,LANG)}catch(e){}applyLang()};
+
+/* ---------- small helpers ---------- */
+function toast(m){const el=$('toast');el.textContent=m;el.classList.add('show');clearTimeout(toast.h);toast.h=setTimeout(()=>el.classList.remove('show'),2600)}
+function ask(title,text,yes){return new Promise(r=>{$('dlgTitle').textContent=title;$('dlgText').textContent=text;$('dlgYes').textContent=yes;$('dlgNo').textContent=t('cancel');
+ $('dlg').classList.add('show');const done=v=>{$('dlg').classList.remove('show');r(v)};$('dlgYes').onclick=()=>done(true);$('dlgNo').onclick=()=>done(false);setTimeout(()=>$('dlgNo').focus(),30)})}
+let view='loading';
+function show(v){view=v;['vLoading','vSignIn','vNotTeacher','vClasses','vRoom'].forEach(id=>$(id).hidden=id!=='v'+v[0].toUpperCase()+v.slice(1));$('signOut').hidden=!(v==='classes'||v==='room'||v==='notTeacher')}
+const el=(tag,cls,txt)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e};
+
+/* ---------- Firebase ---------- */
+let F,auth,db,me=null;
+const r=p=>p?F.ref(db,p):F.ref(db);   // F.ref(db) = the top of the database (an empty path is not allowed)
+async function boot(){
+ applyLang();
+ try{
+  const [cfg,appM,authM,dbM]=await Promise.all([import('./firebase-config.js'),import(FB_CDN+'firebase-app.js'),import(FB_CDN+'firebase-auth.js'),import(FB_CDN+'firebase-database.js')]);
+  const c=cfg.default;if(!c||!c.apiKey||/PASTE/.test(c.apiKey))throw new Error('config');
+  const EMU=/^(localhost|127\.0\.0\.1)$/.test(location.hostname)&&new URLSearchParams(location.search).has('emulator');
+  // ?emulator on localhost: use the isolated demo project (its database is demo-direction-adventure-default-rtdb), never the real one
+  const app=appM.initializeApp(EMU?Object.assign({},c,{projectId:'demo-direction-adventure',authDomain:'demo-direction-adventure.firebaseapp.com',databaseURL:'https://demo-direction-adventure-default-rtdb.firebaseio.com'}):c,'teacher');
+  F=Object.assign({},authM,dbM);auth=authM.getAuth(app);db=dbM.getDatabase(app);
+  // testing on your own computer only: teacher.html?emulator on localhost talks to the Firebase Emulator, never the real project
+  if(EMU){authM.connectAuthEmulator(auth,'http://127.0.0.1:9099',{disableWarnings:true});dbM.connectDatabaseEmulator(db,'127.0.0.1',9000);document.title='[EMULATOR] '+document.title;$('who').before(Object.assign(document.createElement('b'),{textContent:'EMULATOR',style:'background:#ffb92e;padding:3px 8px;border-radius:8px'}))}
+ }catch(e){show('loading');document.querySelector('#vLoading p').textContent=e.message==='config'?t('errConfig'):t('errNet');return}
+ F.onAuthStateChanged(auth,async u=>{
+  stopRoom();stopClasses();me=u;$('who').textContent=u&&u.email||'';
+  if(!u||u.isAnonymous){if(u&&u.isAnonymous)await F.signOut(auth);show('signIn');return}
+  let ok=false;try{ok=(await F.get(r('teachers/'+u.uid))).val()===true}catch(e){}
+  if(!ok){show('notTeacher');return}
+  openClasses();
+ });
+}
+$('signInForm').onsubmit=async e=>{
+ e.preventDefault();const m=$('signInMsg');m.className='msg';m.textContent=t('loading');$('signInBtn').disabled=true;
+ try{await F.signInWithEmailAndPassword(auth,$('email').value.trim(),$('password').value);m.textContent='';$('password').value=''}
+ catch(err){m.className='msg err';const c=err&&err.code||'';m.textContent=/invalid|wrong|not-found|credential|email/.test(c)?t('errAuth'):/too-many/.test(c)?t('errMany'):/network/.test(c)?t('errNet'):t('errGeneric')+c}
+ $('signInBtn').disabled=false;
+};
+$('signOut').onclick=()=>{stopRoom();stopClasses();F.signOut(auth)};
+
+/* ---------- my classes ---------- */
+let classesOff=null,classes=[];
+function stopClasses(){if(classesOff){classesOff();classesOff=null}}
+function openClasses(){
+ stopRoom();show('classes');stopClasses();
+ classesOff=F.onValue(r('teacherRooms/'+me.uid),async s=>{
+  const ids=Object.keys(s.val()||{});
+  const list=await Promise.all(ids.map(async id=>{try{const p=await F.get(r('rooms/'+id+'/public'));return{id,pub:p.val(),createdAt:(await F.get(r('rooms/'+id+'/createdAt'))).val()||0}}catch(e){return{id,pub:null,createdAt:0}}}));
+  classes=list.sort((a,b)=>b.createdAt-a.createdAt);renderClasses();
+ },()=>{classes=[];renderClasses()});
+}
+function renderClasses(){
+ const box=$('classList');box.innerHTML='';
+ if(!classes.length){box.appendChild(el('div','empty',t('noClasses')));return}
+ for(const c of classes){
+  const row=el('div','cls');
+  if(c.pub){row.append(el('b',null,c.pub.name),el('code',null,c.pub.code));const b=el('button','btn primary small',t('open'));b.onclick=()=>openRoom(c.id);row.append(b)}
+  else{row.append(el('b',null,t('closedEntry')));const b=el('button','btn small',t('removeEntry'));b.onclick=()=>F.remove(r('teacherRooms/'+me.uid+'/'+c.id));row.append(b)}
+  box.appendChild(row);
+ }
+}
+$('createForm').onsubmit=async e=>{
+ e.preventDefault();const name=$('newName').value.trim().slice(0,40),m=$('createMsg');m.className='msg';
+ if(!name){m.className='msg err';m.textContent=t('needName');return}
+ $('createBtn').disabled=true;m.textContent=t('loading');
+ const id=F.push(r('rooms')).key;let lastErr=null;
+ for(let k=0;k<6;k++){
+  const code=String(10000+Math.floor(Math.random()*90000));
+  try{
+   // one atomic write: the room, its code, and the entry in "My classes". A code already in use is refused by the rules, so we try another.
+   await F.update(r(''),{['rooms/'+id]:{owner:me.uid,createdAt:F.serverTimestamp(),public:{name,stage:'lobby',code}},['codes/'+code]:id,['teacherRooms/'+me.uid+'/'+id]:true});
+   $('newName').value='';m.textContent='';$('createBtn').disabled=false;toast(t('created')+code);openRoom(id);return;
+  }catch(err){lastErr=err}
+ }
+ m.className='msg err';m.textContent=t('errGeneric')+(lastErr&&(lastErr.code||lastErr.message)||'');$('createBtn').disabled=false;
+};
+
+/* ---------- one class (lobby) ---------- */
+let roomOff=null,room=null,roomId=null;
+function stopRoom(){if(roomOff){roomOff();roomOff=null}room=null;roomId=null;$('proj').classList.remove('show')}
+function openRoom(id){
+ stopClasses();stopRoom();roomId=id;show('room');renderRoom();
+ roomOff=F.onValue(r('rooms/'+id),s=>{
+  if(!s.exists()){toast(t('roomGone'));openClasses();return}
+  room=s.val();renderRoom();
+ },()=>{toast(t('roomGone'));openClasses()});
+}
+function renderRoom(){
+ if(!room)return;
+ const pub=room.public||{},members=room.members||{};
+ $('rCode').textContent=pub.code||'';$('rName').textContent=pub.name||'';
+ const st=$('stages');st.innerHTML='';STAGES.forEach(k=>st.appendChild(el('span','stage'+(k===pub.stage?' on':''),t('st_'+k))));
+ const list=Object.entries(members).map(([uid,v])=>({uid,...v})).sort((a,b)=>Number(a.seat)-Number(b.seat));
+ $('nJoined').textContent=list.length;$('nOnline').textContent=list.filter(s=>s.online).length;
+ const g=$('students');g.innerHTML='';
+ if(!list.length)g.appendChild(el('div','empty',t('noStudents')));
+ for(const s of list){
+  const c=el('div','stu'+(s.online?'':' offline'));
+  const info=el('div');info.style.minWidth='0';
+  info.append(el('div','nm',s.name||'?'));
+  const sub=el('div','sub');const d=el('span','dot'+(s.online?'':' off'));sub.append(d,document.createTextNode((CHAR_NAMES[s.char]||s.char||'')+' · '+(s.lang==='ja'?'日本語':'English')));info.append(sub);
+  const x=el('button','x','✕');x.type='button';x.title=t('remove');x.setAttribute('aria-label',t('remove')+' '+s.seat);
+  // record, seat and "removed" mark change together in one write, so they always match
+  x.onclick=async()=>{if(await ask(t('removeQ'),t('removeText',{s:s.seat,n:s.name}),t('remove'))){try{await F.update(r('rooms/'+roomId),{['members/'+s.uid]:null,['seats/'+s.seat]:null,['blocked/'+s.uid]:{name:String(s.name||'').slice(0,20),seat:String(s.seat),at:F.serverTimestamp()}});toast(t('removed'))}catch(e){toast(t('errGeneric')+(e.code||e.message))}}};
+  c.append(el('div','seat',s.seat),info,x);g.appendChild(c);
+ }
+ const blocked=Object.entries(room.blocked||{}).sort((a,b)=>Number(a[1].seat)-Number(b[1].seat));
+ $('removedBox').hidden=!blocked.length;const rl=$('removedList');rl.innerHTML='';
+ for(const [uid,b] of blocked){const row=el('div','cls');row.append(el('b',null,b.seat+' · '+(b.name||'?')));const btn=el('button','btn small',t('allowBack'));btn.type='button';
+  btn.onclick=async()=>{try{await F.remove(r('rooms/'+roomId+'/blocked/'+uid));toast(t('allowed'))}catch(e){toast(t('errGeneric')+(e.code||e.message))}};row.append(btn);rl.appendChild(row)}
+ $('pName').textContent=pub.name||'';$('pCode').textContent=pub.code||'';$('pCount').textContent=t('pCount',{n:list.length});
+}
+$('backBtn').onclick=()=>openClasses();
+$('projBtn').onclick=()=>{$('proj').classList.add('show');try{document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen().catch(()=>{})}catch(e){}};
+$('projClose').onclick=()=>{$('proj').classList.remove('show');try{document.fullscreenElement&&document.exitFullscreen()}catch(e){}};
+$('closeBtn').onclick=async()=>{
+ if(!room||!(await ask(t('closeQ'),t('closeText'),t('closeYes'))))return;
+ const id=roomId,code=room.public&&room.public.code;
+ try{
+  // room, code and list entry go together, so no code is ever left pointing at a closed class
+  await F.update(r(''),{['rooms/'+id]:null,['codes/'+code]:null,['teacherRooms/'+me.uid+'/'+id]:null});
+  toast(t('closed'));openClasses();
+ }catch(e){toast(t('errGeneric')+(e.code||e.message))}
+};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if($('dlg').classList.contains('show'))$('dlgNo').click();else if($('proj').classList.contains('show'))$('projClose').click()}});
+boot();
+</script>
+</body></html>
